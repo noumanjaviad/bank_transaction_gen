@@ -8,12 +8,25 @@ use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\TransactionType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
     public function getHomePage()
     {
-        return view('index');
+        $totalCustomer = Product::count(); // No need to fetch all records, just count them
+        $companyCounts = Product::whereIn('companyid', ['7', '8', '9'])
+            ->select('companyid', DB::raw('count(*) as total'))
+            ->groupBy('companyid')
+            ->pluck('total', 'companyid');
+
+        $nbd = $companyCounts['8'] ?? 0;
+        $mashriq = $companyCounts['9'] ?? 0;
+        $dubaiIslamic = $companyCounts['7'] ?? 0;
+        // dd($totalCustomer,$nbd,$mashriq,$dubaiIslamic);
+        return view('index', compact('totalCustomer', 'nbd', 'mashriq', 'dubaiIslamic'));
+
+        // return view('index',compact('totalCustomer','nbd','mashriq','dubaiIslamic'));
     }
 
     public function getCreateForm()

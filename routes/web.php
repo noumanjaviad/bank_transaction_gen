@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\GeneratePdfController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
@@ -30,5 +31,8 @@ Route::post('/customers/create', [CustomerController::class, 'store'])->name('cu
 Route::get('nbd_customer',[HomeController::class,'getNbdCustomers'])->name('get_nbd_customers');
 Route::get('get_mashriq_customers',[HomeController::class,'getMashriqCustomers'])->name('get_mashriq_customers');
 Route::get('get_dubai_islamic_customers',[HomeController::class,'dubaiIslamicCustomers'])->name('get_dubai_islamic_customers');
+
+Route::get('generate_pdf',[GeneratePdfController::class,'generatePdf']);
+Route::get('test',[GeneratePdfController::class,'test']);
 
 

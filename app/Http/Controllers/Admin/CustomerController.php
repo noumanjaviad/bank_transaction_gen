@@ -23,7 +23,7 @@ class CustomerController extends Controller
             'account_number'  => 'required|string',
             'iban'            => 'required|string',
             'type'            => 'required|in:savings,current,business',
-            'balance'         =>'required',
+            'balance'         => 'required',
             'contact'         => 'required|string|max:15',
             'address'         => 'nullable|string|max:500',
             'date'            => 'required|date',

@@ -30,7 +30,7 @@
                          <td>{{ $customer->address }}</td>
                          <td>
                              {{-- <a href="{{ route('customers.edit', $customer->id) }}" --}}
-                                <a href="{{route('get_transaction_form')}}"
+                                <a href="{{route('get_transaction_form',$customer->productid)}}"
                                  class="btn btn-success mb-2 btn-sm">Start Transaction</a>
                              <a href=""
                                  class="btn btn-warning btn-sm">Edit</a>

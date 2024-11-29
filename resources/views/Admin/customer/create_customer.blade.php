@@ -93,6 +93,7 @@
             </div>
         </div>
     </div>
+    {{-- {{dd($product)}} --}}
     {{-- start customer show section --}}
     @include('Admin.customer.show_customer',['customers' => $customers])
     {{-- end customer show section --}}

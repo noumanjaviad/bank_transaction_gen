@@ -15,7 +15,7 @@ class HomeController extends Controller
 {
     public function getHomePage()
     {
-        $totalCustomer = Product::count(); // No need to fetch all records, just count them
+        $totalCustomer = Product::count();
         $companyCounts = Product::whereIn('companyid', ['7', '8', '9'])
             ->select('companyid', DB::raw('count(*) as total'))
             ->groupBy('companyid')

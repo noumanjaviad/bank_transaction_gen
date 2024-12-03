@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\GeneratePdfController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +23,9 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', [HomeController::class, 'getHomePage'])->name('home_page');
+
+Route::get('getSigninView',[AuthController::class,'getSigninView']);
+Route::get('getSignupView',[AuthController::class,'getSignupView']);
 
 Route::get('form', [HomeController::class, 'getCreateForm'])->name('get_form');
 Route::get('transaction_form/{productId}',[HomeController::class,'getCreateTransactionForm'])->name('get_transaction_form');

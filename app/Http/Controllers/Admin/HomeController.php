@@ -56,12 +56,11 @@ class HomeController extends Controller
     public function storeTransaction(Request $request, $productId)
     {
         // dd($request->all(),$productId);
-        // Validate the incoming request
         $validated = $request->validate([
             'credit' => 'nullable|numeric|min:0',
             'debit' => 'nullable|numeric|min:0',
             'description' => 'required|string|max:255',
-            'transactiontype_id' => 'required|exists:transaction_types,id', // Assuming a `transaction_types` table
+            'transactiontype_id' => 'required|exists:transaction_types,id',
             'balance' => 'required|numeric|min:0',
             'date' => 'required|date',
             'vdate' => 'nullable|date',
@@ -69,7 +68,6 @@ class HomeController extends Controller
         ]);
 
         try {
-            // Create a transaction record
             $transaction = Transaction::create([
                 'productid' => $productId,
                 'credit' => $validated['credit'] ?? 0,
@@ -86,9 +84,6 @@ class HomeController extends Controller
                 ->route('get_transaction_form', $productId)
                 ->with('success', 'Transaction created successfully!');
         } catch (\Exception $e) {
-            // Log error for debugging
-            Log::error('Transaction creation failed: ' . $e->getMessage());
-
             return redirect()
                 ->back()
                 ->with('error', 'Failed to create transaction. Please try again.');

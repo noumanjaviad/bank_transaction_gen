@@ -30,8 +30,6 @@ class CustomerController extends Controller
         ]);
 
         Product::create($validatedData);
-
-        // Redirect back with a success message
         return redirect()
             ->back()
             ->with('success', 'Customer created successfully!');

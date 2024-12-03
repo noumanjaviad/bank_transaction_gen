@@ -27,11 +27,11 @@ class GeneratePdfController extends Controller
                     'credits' => '-',
                     'balance' => '35,288.63',
                 ],
-                // Add more transactions as needed
             ],
         ];
-        return view('Admin.pdf.transaction',compact('data'));
+        return view('Admin.pdf.test_gen',compact('data'));
     }
+
     public function generatePdf()
     {
         $data = [
@@ -52,11 +52,10 @@ class GeneratePdfController extends Controller
                     'credits' => '-',
                     'balance' => '35,288.63',
                 ],
-                // Add more transactions as needed
             ],
         ];
 
-        $pdf = Pdf::loadView('Admin.pdf.transaction', $data);
+        $pdf = Pdf::loadView('Admin.pdf.test_gen', $data);
         return $pdf->download('statement.pdf');
     }
 }

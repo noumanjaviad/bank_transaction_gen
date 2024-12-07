@@ -35,7 +35,7 @@
                             <td>{{ $nbdCustomer->contact }}</td>
                             <td>{{ $nbdCustomer->address }}</td>
                             <td>
-                                <a href="" class="btn btn-success mb-2 btn-sm">Generate PDF</a>
+                                <a href="{{route('search',$nbdCustomer->productid)}}" class="btn btn-success  mb-2 btn-sm "  id="downloadPDF" >Generate PDF</a>
                                 {{-- <a href="{{ route('customers.edit', $customer->id) }}" --}}
                                 {{-- <a href="{{route('get_transaction_form')}}"
                                         class="btn btn-success mb-2 btn-sm">Start Transaction</a>
@@ -60,5 +60,19 @@
             </div>
         </div>
     </div>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+    <script>
+        document.getElementById('downloadPDF').addEventListener('click', function () {
+            const element = document.getElementById('content');
+            const options = {
+                margin: 1,
+                filename: 'Statement_of_Account.pdf',
+                html2canvas: { scale: 2 },
+                jsPDF: { orientation: 'portrait' }
+            };
 
+            html2pdf().set(options).from(element).save();
+        });
+    </script> --}}
 @endsection
+

@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Statement of Account</title>
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script> -->
     <style>
         @font-face {
             font-family: 'Amiri';
@@ -12,17 +17,14 @@
             font-weight: normal;
             font-style: normal;
         }
-
         body {
-            font-family: 'Amiri', Arial, sans-serif;
-            /* font-family: Arial, sans-serif;
-            font-size: 12px; */
-            /* direction: rtl; */
+            font-family: Arial, sans-serif,'Amiri';
+            font-size: 12px;
         }
 
         .container-fluid {
             width: 100%;
-            /* height: 200px; */
+            height: 200px;
 
         }
 
@@ -30,7 +32,6 @@
             border-right: 2px solid black !important;
             padding-right: 20px;
             width: 40%;
-            margin-right: 10px
         }
 
         .personal-info {
@@ -74,10 +75,10 @@
 
         }
 
-        /* .headers {
+        .headers {
             display: flex;
             justify-content: space-between
-        } */
+        }
 
         .inner-data {
             display: flex;
@@ -151,7 +152,9 @@
                 margin-bottom: 20px;
                 border-bottom: 2px solid black !important;
             }
+        }
 
+        @media screen and (max-width: 768px) {
             .headers {
                 flex-direction: column;
             }
@@ -167,30 +170,6 @@
             .personal-info {
                 width: 100%;
             }
-        }
-
-        .arabic-text {
-            direction: rtl;
-            text-align: right;
-            font-family: 'Amiri', Arial, sans-serif;
-        }
-
-        @media screen and (max-width: 768px) {
-            /* .headers {
-                flex-direction: column;
-            }
-
-            .account-statement {
-                border-right: none !important;
-                padding-bottom: 20px;
-                margin-bottom: 20px;
-                border-bottom: 2px solid black !important;
-                width: 100%;
-            }
-
-            .personal-info {
-                width: 100%;
-            } */
         }
 
         @media (min-width: 1200px) {
@@ -229,13 +208,12 @@
 </head>
 
 <body>
-    {{-- {{dd($data['logo'])}} --}}
-    <div class="container-fluid ">
-        <img class="object-cover" width="100%" src="{{ $data['logo'] }}" alt="">
+    <div class="container">
+        <img src="{{ $data['logo']}}" alt="Logo">
 
-        <div class="headers " style="display: flex;">
+        <div class="headers ">
             <div class="account-statement  ">
-                <h2 class="arabic-text text-center">كشف حساب</h2>
+                <h2 class="text-center arabic-text">كشف حساب</h2>
                 <h2 class="text-center ">Statement of Account</h2>
                 <p>Mr. Waqas Ali</p>
                 <p>Customer TRN:</p>
@@ -362,8 +340,8 @@
                     <p>350000 cr</p>
                 </div>
             </div>
-            <img src="{{ $data['footerImage1'] }}" width="100%" alt="">
-            <img class="footer-img" src="{{ $data['footerImage2'] }}" width="100%" alt="">
+            <img src=" {{$data['footerImage1']}}" width="100%" alt="">
+            <img class="footer-img" src="{{$data['footerImage2']" width="100%" alt="">
             <!-- <p><strong>Bringing you the future of Mobile Banking</strong></p> -->
             <div class="footer-bottom">
                 <div>
@@ -375,13 +353,11 @@
                     <p>Emrites NBD barsk Enthusiastic and highly skilled </p>
                 </div>
                 <div class="second-div">
-                    <p class="arabic-text">ها بصورة أكثر عقلانية ومنطقية فيعرضهم هذا لمواجهة الظروف الأليمة، وأكرر بأنه
-                        لمن.</p>
+                    <p class="arabic-text">ها بصورة أكثر عقلانية ومنطقية فيعرضهم هذا لمواجهة الظروف الأليمة، وأكرر بأنه لمن.</p>
                     <p class="arabic-text"> نتيجة لظروف ما قد تكمن السعاده فيما نتحمله م</p>
                     <p class="arabic-text"> الألم الذي ربما تنجم عنه بعض ا </p>
                     <p class="arabic-text">ذه الأفكار المغلوطة ح </p>
-                    <p class="arabic-text">ها بصورة أكثر عقلانية ومنطقية فيعرضهم هذا لمواجهة الظروف الأليمة، وأكرر بأنه
-                        لمن.</p>
+                    <p class="arabic-text">ها بصورة أكثر عقلانية ومنطقية فيعرضهم هذا لمواجهة الظروف الأليمة، وأكرر بأنه لمن.</p>
                     <p class="arabic-text"> نتيجة لظروف ما قد تكمن السعاده فيما نتحمله م</p>
                 </div>
             </div>

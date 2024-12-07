@@ -10,6 +10,7 @@ use App\Models\TransactionType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -27,6 +28,22 @@ class HomeController extends Controller
         // dd($totalCustomer,$nbd,$mashriq,$dubaiIslamic);
         return view('index', compact('totalCustomer', 'nbd', 'mashriq', 'dubaiIslamic'));
     }
+
+    public function viewSearch($id)
+    {
+        return view('Admin.search', compact('id'));
+    }
+    public function storeSearch(Request $request)
+    {
+        $vdate = Carbon::createFromFormat('Y-m-d', $request->from_date)->format('d-m-Y');
+        $date = Carbon::createFromFormat('Y-m-d', $request->to_date)->format('m/d/Y');
+        $trans = Transaction::where('vdate', $vdate)
+            ->where('date', $date)
+            ->where('productid', $request->productid)->with('product')
+            ->get();
+        return view('Admin.pdf.latest', compact('trans'));
+    }
+
 
     public function getCreateForm()
     {

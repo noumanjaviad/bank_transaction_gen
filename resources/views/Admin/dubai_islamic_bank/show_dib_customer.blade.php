@@ -35,7 +35,7 @@
                             <td>{{ $dubaiIslamicCustomer->contact }}</td>
                             <td>{{ $dubaiIslamicCustomer->address }}</td>
                             <td>
-                                <a href="" class="btn btn-success mb-2 btn-sm">Generate PDF</a>
+                                <a href="{{route('search',$dubaiIslamicCustomer->productid)}}" class="btn btn-success mb-2 btn-sm">Generate PDF</a>
                                 {{-- <a href="{{ route('customers.edit', $customer->id) }}" --}}
                                 {{-- <a href="{{route('get_transaction_form')}}"
                                         class="btn btn-success mb-2 btn-sm">Start Transaction</a>

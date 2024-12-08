@@ -9,6 +9,7 @@ class Transaction extends Model
 {
     use HasFactory;
 
+
     protected $fillable = [
         'transactionid',
         'credit',
@@ -24,12 +25,13 @@ class Transaction extends Model
     protected $primaryKey = 'transactionid';
 
     protected $table = 'transaction';
+    public $timestamps = false;
 
-   // Relationship to Product
-   public function product()
-   {
-       return $this->belongsTo(Product::class, 'productid', 'productid');
-   }
+    // Relationship to Product
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'productid', 'productid');
+    }
 
 
     public function transaction_type()

@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\GeneratePdfController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -48,9 +49,10 @@ Route::post('/signup', [AuthController::class, 'register'])->name('signup.store'
 
 Route::get('form', [HomeController::class, 'getCreateForm'])->name('get_form');
 Route::get('transaction_form/{productId}',[HomeController::class,'getCreateTransactionForm'])->name('get_transaction_form');
+Route::post('store-transaction',[TransactionController::class,'storeTransaction'])->name('store_transaction');
 Route::get('show_customer',[HomeController::class,'getCustomerShow']);
 Route::post('/customers/create', [CustomerController::class, 'store'])->name('customers.store');
-Route::post('transaction_form/{productId}', [HomeController::class, 'storeTransaction'])->name('store_transaction');
+// Route::post('transaction_form/{productId}', [HomeController::class, 'storeTransaction'])->name('store_transaction');
 
 
 Route::get('nbd_customer',[HomeController::class,'getNbdCustomers'])->name('get_nbd_customers');
@@ -62,3 +64,4 @@ Route::get('get_product/{productid}',[CustomerController::class,'getProduct'])->
 Route::get('test',[GeneratePdfController::class,'test'])->name('test-up');
 Route::get('get-search/{id}',[HomeController::class,'viewSearch'])->name('search');
 Route::post('search-transaction',[HomeController::class,'storeSearch'])->name('search.transaction');
+

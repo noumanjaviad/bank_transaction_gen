@@ -337,21 +337,26 @@
             <!-- <p><strong>Bringing you the future of Mobile Banking</strong></p> -->
             <div class="footer-bottom">
                 <div>
-                    <p>Emrites NBD barsk Enthusiastic and highly skilled Back-End</p>
-                    <p>Emrites NBD barsk Enthusiastic and highly skilled</p>
-                    <p>Emrites NBD barsk Enthusiastic and </p>
-                    <p>Emrites NBD barsk Enthusiastic </p>
-                    <p>Emrites NBD barsk Enthusiastic and </p>
-                    <p>Emrites NBD barsk Enthusiastic and highly skilled </p>
+                    <p>Emirates NBD Bank (P.J.S.C.) is licensed by the Central Bank of the UAE.</p>
+                    <p>Head Office: Baniyas Road, Deira, PO Box 777, Dubai UAE</p>
+                    <p>Tel: +971 600540000, www.emiratesnbd.com</p>
+                    <p>Registered Details: Emirates NBD Bank (PJSC)</p>
+                    <p>Paid Up Capital AED 6,316,598,000</p>
+                    <p>Commercial Registration No. 1013450</p>
+                    <p>Tax Registration Number 100035307600003</p>
                 </div>
+
                 <div class="second-div">
-                    <p>ها بصورة أكثر عقلانية ومنطقية فيعرضهم هذا لمواجهة الظروف الأليمة، وأكرر بأنه لمن.</p>
-                    <p> نتيجة لظروف ما قد تكمن السعاده فيما نتحمله م</p>
-                    <p> الألم الذي ربما تنجم عنه بعض ا </p>
-                    <p>ذه الأفكار المغلوطة ح </p>
-                    <p>ها بصورة أكثر عقلانية ومنطقية فيعرضهم هذا لمواجهة الظروف الأليمة، وأكرر بأنه لمن.</p>
-                    <p> نتيجة لظروف ما قد تكمن السعاده فيما نتحمله م</p>
+                    <p>بنك الإمارات دبي الوطني ش.م.ع مرخص من قبل مصرف الإمارات العربية المتحدة المركزي.</p>
+                    <p>المكتب الرئيسي: شارع بني ياس، ديرة، صندوق بريد 777، دبي، الإمارات العربية المتحدة</p>
+                    <p>هاتف: 600540000 971+</p>
+                    <p>www.emiratesnbd.com</p>
+                    <p>تفاصيل سجل البنك: بنك الإمارات دبي الوطني (ش.م.ع)</p>
+                    <p>رأس المال المدفوع: ٦,٣١٦,٥٩٨,٠٠٠ درهم</p>
+                    <p>رقم التسجيل التجاري: ١٠١٣٤٥٠</p>
+                    <p>رقم التسجيل الضريبي: ١٠٠٠٣٥٣٠٧٦٠٠٠٠٣</p>
                 </div>
+
             </div>
         </div>
     </div>

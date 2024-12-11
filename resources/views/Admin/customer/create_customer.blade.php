@@ -54,12 +54,12 @@
                             </select>
                         </div>
                     </div>
-                    <div class="row mb-3">
+                    {{-- <div class="row mb-3">
                         <label for="balance" class="col-sm-2 col-form-label">Amount</label>
                         <div class="col-sm-10">
                             <input type="number" class="form-control" id="balance" name="balance" required min="0">
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="row mb-3">
                         <label for="date" class="col-sm-2 col-form-label">Transaction Date</label>

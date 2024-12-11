@@ -13,6 +13,7 @@ class GeneratePdfController extends Controller
 {
     public function test(Request $request)
     {
+        // dd(12);
 
         // $data = [
         //     'logo' => public_path('image/logo.png'),

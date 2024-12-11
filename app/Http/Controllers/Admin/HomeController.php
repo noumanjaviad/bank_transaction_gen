@@ -33,16 +33,39 @@ class HomeController extends Controller
     {
         return view('Admin.search', compact('id'));
     }
+    // public function storeSearch(Request $request)
+    // {
+
+
+    //     $vdate = Carbon::createFromFormat('Y-m-d', $request->from_date)->format('d-m-Y');
+    //     $date = Carbon::createFromFormat('Y-m-d', $request->to_date)->format('d-m-Y');
+    //     // dd($vdate,$date);
+    //     $trans = Transaction::where('vdate', $vdate)
+    //         ->where('date', $date)
+    //         ->where('productid', $request->productid)->with('product')
+    //         ->get();
+
+    //     return view('Admin.pdf.latest', compact('trans'));
+    // }
+
     public function storeSearch(Request $request)
     {
-        $vdate = Carbon::createFromFormat('Y-m-d', $request->from_date)->format('d-m-Y');
-        $date = Carbon::createFromFormat('Y-m-d', $request->to_date)->format('m/d/Y');
-        $trans = Transaction::where('vdate', $vdate)
-            ->where('date', $date)
-            ->where('productid', $request->productid)->with('product')
+        $request->validate([
+            'from_date' => 'required|date|before_or_equal:to_date',
+            'to_date' => 'required|date|after_or_equal:from_date',
+            'productid' => 'required|integer|exists:product,productid',
+        ]);
+
+
+        $fromDate = $request->from_date;
+        $toDate = $request->to_date;
+        $trans = Transaction::where('productid', $request->productid)
+            ->whereBetween('date', [$fromDate, $toDate])
+            ->with('product')
             ->get();
         return view('Admin.pdf.latest', compact('trans'));
     }
+
 
 
     public function getCreateForm()
@@ -65,7 +88,7 @@ class HomeController extends Controller
         $product = Product::findOrFail($productId);
         $transactionTypes = TransactionType::select('transactiontype_id', 'name')->get();
         // dd($transactionTypes);
-        $transactions = Transaction::with('product')->get();
+        $transactions = Transaction::where('productid', $productId)->with('product')->get();
         // dd($transactions);
         return view('Admin.transaction.create_transaction', compact('transactionTypes', 'transactions', 'product'));
     }

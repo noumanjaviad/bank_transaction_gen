@@ -45,7 +45,7 @@
                     <div class="row mb-3">
                         <label for="add_amount" class="col-sm-2 col-form-label">Add Amount</label>
                         <div class="col-sm-10">
-                            <input type="number" class="form-control" id="balance" name="credit" required min="0">
+                            <input type="number" class="form-control" id="balance" name="credit">
                         </div>
                     </div>
 
@@ -56,7 +56,7 @@
                     <div class="row mb-3">
                         <label for="deduct_amount" class="col-sm-2 col-form-label">Deduct Amount</label>
                         <div class="col-sm-10">
-                            <input type="number" class="form-control" id="account_number" name="debit" required min="0">
+                            <input type="number" class="form-control" id="account_number" name="debit">
                         </div>
                     </div>
 
@@ -93,7 +93,7 @@
                     <div class="row mb-3">
                         <label for="value_date" class="col-sm-2 col-form-label">Value Date</label>
                         <div class="col-sm-10">
-                            <input type="date" class="form-control" id="value_date" name="vdate" required>
+                            <input type="date" class="form-control" id="value_date" name="vdate">
                         </div>
                     </div>
 

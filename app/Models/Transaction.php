@@ -27,7 +27,6 @@ class Transaction extends Model
     protected $table = 'transaction';
     public $timestamps = false;
 
-    // Relationship to Product
     public function product()
     {
         return $this->belongsTo(Product::class, 'productid', 'productid');

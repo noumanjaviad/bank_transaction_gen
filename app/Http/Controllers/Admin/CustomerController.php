@@ -16,6 +16,7 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
 
         $validatedData = $request->validate([
             'companyid'       => 'required|exists:company,companyid',
@@ -23,11 +24,11 @@ class CustomerController extends Controller
             'account_number'  => 'required|string',
             'iban'            => 'required|string',
             'type'            => 'required|in:savings,current,business',
-            'balance'         => 'required',
             'contact'         => 'required|string|max:15',
             'address'         => 'nullable|string|max:500',
             'date'            => 'required|date',
         ]);
+        // dd($validatedData);
 
         Product::create($validatedData);
         return redirect()

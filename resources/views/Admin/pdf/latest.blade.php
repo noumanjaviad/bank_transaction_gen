@@ -5,11 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Statement of Account</title>
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script> -->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -74,9 +69,9 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start
-
         }
-        .account-details1{
+
+        .account-details1 {
             display: flex;
             flex-direction: column;
         }
@@ -86,7 +81,8 @@
             justify-content: space-between;
             align-items: flex-start
         }
-        .inner1{
+
+        .inner1 {
             display: flex;
             flex-direction: column;
 
@@ -177,23 +173,7 @@
             }
         }
 
-        @media screen and (max-width: 768px) {
-            /* .headers {
-                flex-direction: column;
-            } */
-
-            /* .account-statement {
-                border-right: none !important;
-                padding-bottom: 20px;
-                margin-bottom: 20px;
-                border-bottom: 2px solid black !important;
-                width: 100%;
-            } */
-
-            /* .personal-info {
-                width: 100%;
-            } */
-        }
+        @media screen and (max-width: 768px) {}
 
         @media (min-width: 1200px) {
             .container {
@@ -232,22 +212,21 @@
 
 <body>
     <div class="container" id="content">
-        <img class="object-cover" width="100%" src="{{asset('image/logo.png')}}" alt="">
+        <img class="object-cover" width="100%" src="{{ asset('image/logo.png') }}" alt="">
 
-        <div class="headers ">
+        {{-- <div class="headers ">
             <div class="account-statement  ">
 
                 <h2 class="text-center">كشف حساب</h2>
                 <h2 class="text-center ">Statement of Account</h2>
                 <div class="account-details1">
                     @foreach ($trans as $tran)
-                <p>{{$tran->product->name}}</p>
-                <p>Customer TRN:</p>
-                <p>{{$tran->product->address}}</p>
-                @endforeach
+                        <p>{{ $tran->product->name }}</p>
+                        <p>Customer TRN:</p>
+                        <p>{{ $tran->product->address }}</p>
+                    @endforeach
+                </div>
             </div>
-            </div>
-            <!-- <div class="" style="height: 200px,border:2px solid red"></div>  -->
             <div class="personal-info ">
                 <div class="inner-data">
                     <div class="inner1">
@@ -265,23 +244,23 @@
                         <p>Account Type</p>
                     </div>
                     <div class="inner1">
-                        @foreach($trans as $transactionData)
-                        <p>{{$transactionData->product->date}}</p>
-                        <p>Dubai Mall branch</p>
-                        <span class="fix-no">
-                            <p>رقم الفاكس </p>
-                            <p>Fax.no.</p>
-                        </span>
-                        <div class="no">
-                            <p> الصفحات </p>
-                            <p>No</p>
-                            <p>1</p>
-                        </div>
-                        <p>UAE DIRHAM</p>
-                        <p>{{$transactionData->product->account_number}}</p>
-                        <p>Monthly</p>
-                        <p>{{$transactionData->product->iban}}</p>
-                        <p>{{$transactionData->product->type}}</p>
+                        @foreach ($trans as $transactionData)
+                            <p>{{ $transactionData->product->date }}</p>
+                            <p>Dubai Mall branch</p>
+                            <span class="fix-no">
+                                <p>رقم الفاكس </p>
+                                <p>Fax.no.</p>
+                            </span>
+                            <div class="no">
+                                <p> الصفحات </p>
+                                <p>No</p>
+                                <p>1</p>
+                            </div>
+                            <p>UAE DIRHAM</p>
+                            <p>{{ $transactionData->product->account_number }}</p>
+                            <p>Monthly</p>
+                            <p>{{ $transactionData->product->iban }}</p>
+                            <p>{{ $transactionData->product->type }}</p>
                         @endforeach
                     </div>
                     <div class="inner1">
@@ -297,9 +276,53 @@
                     </div>
                 </div>
             </div>
+        </div> --}}
+
+        <div class="headers">
+            <div class="account-statement">
+                <h2 class="text-center">كشف حساب</h2>
+                <h2 class="text-center">Statement of Account</h2>
+                <div class="account-details1">
+                    @foreach ($trans as $tran)
+                        <p>Product: {{ $tran->product->name }}</p>
+                        <p>Customer TRN:</p>
+                        <p>Address: {{ $tran->product->address }}</p>
+                    @endforeach
+                </div>
+            </div>
+            <div class="personal-info">
+                <div class="inner-data">
+                    <div class="inner1">
+                        <p>Date: {{ $trans[0]->product->date ?? 'N/A' }}</p>
+                        <p>Branch: Dubai Mall branch</p>
+                        <p>Tel. no.</p>
+                        <span class="pages">
+                            <p>Pages: 30</p>
+                        </span>
+                        <p>Currency: UAE DIRHAM</p>
+                        <p>Account No.: {{ $trans[0]->product->account_number ?? 'N/A' }}</p>
+                        <p>Interest Payout: Monthly</p>
+                        <p>IBAN: {{ $trans[0]->product->iban ?? 'N/A' }}</p>
+                        <p>Account Type: {{ $trans[0]->product->type ?? 'N/A' }}</p>
+                    </div>
+                    <div class="inner1">
+                        <p>تاريخ: {{ $trans[0]->product->date ?? 'N/A' }}</p>
+                        <p>فرع: فرع دبي مول</p>
+                        <p>رقم الفاكس</p>
+                        <p>الصفحات: 30</p>
+                        <p>العملة: درهم إماراتي</p>
+                        <p>رقم الحساب</p>
+                        <p>الفائدة المدفوعة: شهرياً</p>
+                        <p>رقم الأيبان</p>
+                        <p>نوع الحساب</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <h3 class="text-center">Statement of Account for the Period of 07-06-2024 to 07-11-2024</h3>
+
+        <h3 class="text-center">Statement of Account for the Period of {{$trans[0]->vdate}} to {{$trans[0]->date}}</h3>
+
 
         <table class="transactions">
             <thead>
@@ -312,29 +335,30 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($trans as $transaction )
-                <tr>
-                    <td>{{$transaction->product->date}}</td>
-                    <td>{{$transaction->transactiontype_id}}</td>
-                    <td>{{$transaction->debit}}</td>
-                    <td class="right-align">{{$transaction->credit}}</td>
-                    <td class="right-align">{{$transaction->balance}}</td>
-                </tr>
-
+                @foreach ($trans as $transaction)
+                    <tr>
+                        <td>{{ $transaction->product->date }}</td>
+                        <td>{{ $transaction->description }}</td>
+                        <td>{{ $transaction->debit }}</td>
+                        <td class="right-align">{{ $transaction->credit }}</td>
+                        <td class="right-align">{{ $transaction->balance }}</td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
 
+
         <div class="footer">
             <div class="footer-top">
-                <div>
-                    <p>CARRIRED FORWARD</p>
-                    <p>{{$transaction->balance}}</p>
-                    @endforeach
-                </div>
+
+                    <div>
+                        <p>CARRIRED FORWARD</p>
+                        <p>{{ $trans->last()->balance }}</p>
+                    </div>
+
             </div>
-            <img src="{{asset('image/footer1.JPG')}}" width="100%" alt="">
-            <img class="footer-img" src="{{asset('image/footer2.JPG')}}" width="100%" alt="">
-            <!-- <p><strong>Bringing you the future of Mobile Banking</strong></p> -->
+            <img src="{{ asset('image/footer1.JPG') }}" width="100%" alt="">
+            <img class="footer-img" src="{{ asset('image/footer2.JPG') }}" width="100%" alt="">
             <div class="footer-bottom">
                 <div>
                     <p>Emirates NBD Bank (P.J.S.C.) is licensed by the Central Bank of the UAE.</p>
@@ -360,33 +384,24 @@
             </div>
         </div>
     </div>
-    {{-- <button id="downloadPDF" style="margin: 20px; display: block;">Download PDF</button> --}}
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
-    {{-- <script>
-        document.getElementById('downloadPDF').addEventListener('click', function () {
-            const element = document.getElementById('content');
-            const options = {
-                margin: 1,
-                filename: 'Statement_of_Account.pdf',
-                html2canvas: { scale: 2 },
-                jsPDF: { orientation: 'portrait' }
-            };
 
-            html2pdf().set(options).from(element).save();
-        });
-    </script> --}}
     <script>
         console.log('testing');
-        window.onload = function () {
+        window.onload = function() {
             console.log("test");
 
             const element = document.getElementById('content');
             const options = {
                 margin: 1,
                 filename: 'Statement_of_Account.pdf',
-                html2canvas: { scale: 2 },
-                jsPDF: { orientation: 'portrait' }
+                html2canvas: {
+                    scale: 2
+                },
+                jsPDF: {
+                    orientation: 'portrait'
+                }
             };
 
             html2pdf().set(options).from(element).save().then(() => {

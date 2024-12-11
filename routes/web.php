@@ -52,7 +52,6 @@ Route::get('transaction_form/{productId}',[HomeController::class,'getCreateTrans
 Route::post('store-transaction',[TransactionController::class,'storeTransaction'])->name('store_transaction');
 Route::get('show_customer',[HomeController::class,'getCustomerShow']);
 Route::post('/customers/create', [CustomerController::class, 'store'])->name('customers.store');
-// Route::post('transaction_form/{productId}', [HomeController::class, 'storeTransaction'])->name('store_transaction');
 
 
 Route::get('nbd_customer',[HomeController::class,'getNbdCustomers'])->name('get_nbd_customers');

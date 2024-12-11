@@ -67,7 +67,7 @@
                         <td>{{ $transaction->vdate}}</td>
                         <td>{{ $transaction->reference}}</td>
                         <td>{{ $transaction->product->type }}</td>
-                        <td>{{ $transaction->product->balance }}</td>
+                        <td>{{ $transaction->balance }}</td>
                         <td>{{ $transaction->credit }}</td>
                         <td>{{ $transaction->debit }}</td>
                         <td>

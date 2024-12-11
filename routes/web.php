@@ -23,35 +23,28 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-    Route::get('/', [HomeController::class, 'getHomePage'])->name('home_page');
+Route::get('/', [HomeController::class, 'getHomePage'])->name('home_page');
 
 Route::get('getSigninView', [AuthController::class, 'getSigninView']);
 Route::get('getSignupView', [AuthController::class, 'getSignupView']);
 Route::post('/signin', [AuthController::class, 'signIn'])->name('signin.store');
 Route::post('/signup', [AuthController::class, 'register'])->name('signup.store');
-// Route::middleware('auth')->group(function () {
-
-//     Route::get('form', [HomeController::class, 'getCreateForm'])->name('get_form');
-//     Route::get('transaction_form/{productId}', [HomeController::class, 'getCreateTransactionForm'])->name('get_transaction_form');
-//     Route::get('show_customer', [HomeController::class, 'getCustomerShow']);
-//     Route::post('/customers/create', [CustomerController::class, 'store'])->name('customers.store');
-//     Route::post('transaction_form/{productId}', [HomeController::class, 'storeTransaction'])->name('store_transaction');
-
-//     Route::get('nbd_customer', [HomeController::class, 'getNbdCustomers'])->name('get_nbd_customers');
-//     Route::get('get_mashriq_customers', [HomeController::class, 'getMashriqCustomers'])->name('get_mashriq_customers');
-//     Route::get('get_dubai_islamic_customers', [HomeController::class, 'dubaiIslamicCustomers'])->name('get_dubai_islamic_customers');
-
-//     Route::get('generate_pdf', [GeneratePdfController::class, 'generatePdf']);
-//     Route::get('get_product/{productid}', [CustomerController::class, 'getProduct'])->name('get_product');
-//     Route::get('test', [GeneratePdfController::class, 'test']);
-// });
 
 
 Route::get('form', [HomeController::class, 'getCreateForm'])->name('get_form');
 Route::get('transaction_form/{productId}',[HomeController::class,'getCreateTransactionForm'])->name('get_transaction_form');
 Route::post('store-transaction',[TransactionController::class,'storeTransaction'])->name('store_transaction');
-Route::get('show_customer',[HomeController::class,'getCustomerShow']);
+
+Route::get('/transactions/edit/{id}', [TransactionController::class, 'edit'])->name('transactions.edit');
+Route::post('/transactions/update/{id}', [TransactionController::class, 'updateTransaction'])->name('update_transaction');
+Route::delete('/transactions/delete/{id}', [TransactionController::class, 'deleteTransaction'])->name('delete_transaction');
+
+// Route::get('show_customer',[HomeController::class,'getCustomerShow']);
 Route::post('/customers/create', [CustomerController::class, 'store'])->name('customers.store');
+Route::get('/customers/{id}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
+Route::put('/customers/{id}', [CustomerController::class, 'update'])->name('customers.update');
+Route::delete('/customers/{id}', [CustomerController::class, 'destroy'])->name('customers.destroy');
+
 
 
 Route::get('nbd_customer',[HomeController::class,'getNbdCustomers'])->name('get_nbd_customers');

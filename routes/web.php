@@ -23,20 +23,21 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/', [HomeController::class, 'getHomePage'])->name('home_page');
+Route::get('sigin', [AuthController::class, 'getSigninView'])->name('signin');
+Route::get('signup', [AuthController::class, 'getSignupView'])->name('signup');
+Route::post('signin', [AuthController::class, 'signIn'])->name('signin.store');
+Route::post('signup', [AuthController::class, 'register'])->name('signup.store');
+Route::redirect('/', 'dashboard');
 
-Route::get('getSigninView', [AuthController::class, 'getSigninView']);
-Route::get('getSignupView', [AuthController::class, 'getSignupView']);
-Route::post('/signin', [AuthController::class, 'signIn'])->name('signin.store');
-Route::post('/signup', [AuthController::class, 'register'])->name('signup.store');
+Route::middleware('auth')->group(function () {
 
-
+Route::get('/dashboard', [HomeController::class, 'getHomePage'])->name('home_page');
 Route::get('form', [HomeController::class, 'getCreateForm'])->name('get_form');
 Route::get('transaction_form/{productId}',[HomeController::class,'getCreateTransactionForm'])->name('get_transaction_form');
 Route::post('store-transaction',[TransactionController::class,'storeTransaction'])->name('store_transaction');
 
 Route::get('/transactions/edit/{id}', [TransactionController::class, 'edit'])->name('transactions.edit');
-Route::post('/transactions/update/{id}', [TransactionController::class, 'updateTransaction'])->name('update_transaction');
+Route::put('/transactions/update/{id}', [TransactionController::class, 'updateTransaction'])->name('update_transaction');
 Route::delete('/transactions/delete/{id}', [TransactionController::class, 'deleteTransaction'])->name('delete_transaction');
 
 // Route::get('show_customer',[HomeController::class,'getCustomerShow']);
@@ -57,6 +58,7 @@ Route::get('test',[GeneratePdfController::class,'test'])->name('test-up');
 Route::get('get-search/{id}',[HomeController::class,'viewSearch'])->name('search');
 Route::post('search-transaction',[HomeController::class,'storeSearch'])->name('search.transaction');
 
+});
 Route::get('test-mashriq',function(){
     return view('Admin.mashriq.mashriq_pdf');
 });

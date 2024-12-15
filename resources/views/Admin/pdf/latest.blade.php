@@ -241,7 +241,7 @@
                         <p>Account Type: {{ $otherTransactions[0]->product->type ?? 'N/A' }}</p>
                     </div>
                     <div class="inner1">
-                        <p>تاريخ: {{ $otherTransactions[0]->product->date ?? 'N/A' }}</p>
+                        <p>تاريخ: </p>
                         <p>فرع: فرع دبي مول</p>
                         <p>رقم الفاكس</p>
                         <p>الصفحات: 30</p>
@@ -289,7 +289,7 @@
 
                 <div>
                     <p>CARRIRED FORWARD</p>
-                    <p>{{ $otherTransactions->last()->balance }}</p>
+                    <p>{{ $latest->balance }}</p>
                 </div>
 
             </div>
@@ -324,9 +324,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 
     <script>
-        console.log('testing');
         window.onload = function() {
-            console.log("test");
 
             const element = document.getElementById('content');
             const options = {
@@ -343,6 +341,7 @@
             html2pdf().set(options).from(element).save().then(() => {
                 // Close the window after saving
                 window.close();
+                window.history.go(-1);
             });
         };
     </script>

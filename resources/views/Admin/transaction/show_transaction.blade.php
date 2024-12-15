@@ -67,9 +67,9 @@
                          <td>{{ $transaction->vdate }}</td>
                          <td>{{ $transaction->reference }}</td>
                          <td>{{ $transaction->product->type }}</td>
-                         <td>{{ $transaction->balance }}</td>
-                         <td>{{ $transaction->credit }}</td>
-                         <td>{{ $transaction->debit }}</td>
+                         <td>{{ $transaction->balance == 0 ? '-' : $transaction->balance }}</td>
+                         <td>{{ $transaction->credit == 0 ? '-' : $transaction->credit }}</td>
+                         <td>{{ $transaction->debit == 0 ? '-' : $transaction->debit }}</td>
                          <td>
                              {{-- <a href="{{ route('customers.edit', $customer->id) }}" --}}
                              {{-- <a href=""

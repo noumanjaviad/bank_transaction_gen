@@ -9,7 +9,7 @@
             <h6 class="mb-4">Edit Transaction</h6>
             <form action="{{ route('update_transaction', $transaction->transactionid) }}" method="POST">
                 @csrf
-                {{-- @method('PUT') --}}
+                @method('PUT')
                 <div class="row mb-3">
                     <label for="credit" class="col-sm-2 col-form-label">Credit</label>
                     <div class="col-sm-10">

@@ -68,19 +68,19 @@ class HomeController extends Controller
 
             $mashriqTransactions = [];
             $otherTransactions = [];
+            $latest = $data->last();
 
             foreach($data as $trans){
                 if($trans->product->company->name === 'Mashriq'){
                     $mashriqTransactions[] = $trans;
                 }else{
                     $otherTransactions[] = $trans;
-                    // return view('Admin.pdf.latest', compact('trans'));
                 }
             }
             if (!empty($mashriqTransactions)) {
                 return view('Admin.mashriq.mashriq_pdf', ['transactions' => $mashriqTransactions]);
             } elseif (!empty($otherTransactions)) {
-                return view('Admin.pdf.latest', ['transactions' => $otherTransactions]);
+                return view('Admin.pdf.latest', ['otherTransactions' => $otherTransactions, 'latest' => $latest]);
             } else {
                 // Fallback if no data found
                 return back()->with('error', 'No transactions found for the specified criteria.');

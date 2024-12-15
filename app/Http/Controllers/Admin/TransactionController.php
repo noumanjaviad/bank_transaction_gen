@@ -65,8 +65,8 @@ class TransactionController extends Controller
         // dd($request->all());
         try {
             $validatedData = $request->validate([
-                'credit' => 'nullable|numeric|min:0',
-                'debit' => 'nullable|numeric|min:0',
+                'credit' => 'nullable|min:0',
+                'debit' => 'nullable|min:0',
                 'description' => 'nullable|string',
                 'transactiontype_id' => 'nullable|exists:transactiontype,transactiontype_id',
                 'date' => 'nullable|date',
@@ -76,7 +76,7 @@ class TransactionController extends Controller
 
             $transaction = Transaction::findOrFail($transactionId);
 
-            $lastTransaction = Transaction::where('productid', $transaction->productid ?? null)
+            $lastTransaction = Transaction::where('productid', $transaction->productid)
                 ->where('transactionid', '<>', $transactionId)
                 ->latest('transactionid')
                 ->first();

@@ -50,6 +50,7 @@ class HomeController extends Controller
 
     public function storeSearch(Request $request)
     {
+        // $trans=[];
         $request->validate([
             'from_date' => 'required|date|before_or_equal:to_date',
             'to_date' => 'required|date|after_or_equal:from_date',
@@ -59,11 +60,32 @@ class HomeController extends Controller
 
         $fromDate = $request->from_date;
         $toDate = $request->to_date;
-        $trans = Transaction::where('productid', $request->productid)
+
+        $data = Transaction::where('productid', $request->productid)
             ->whereBetween('date', [$fromDate, $toDate])
-            ->with('product')
+            ->with('product.company')
             ->get();
-        return view('Admin.pdf.latest', compact('trans'));
+
+            $mashriqTransactions = [];
+            $otherTransactions = [];
+
+            foreach($data as $trans){
+                if($trans->product->company->name === 'Mashriq'){
+                    $mashriqTransactions[] = $trans;
+                }else{
+                    $otherTransactions[] = $trans;
+                    // return view('Admin.pdf.latest', compact('trans'));
+                }
+            }
+            if (!empty($mashriqTransactions)) {
+                return view('Admin.mashriq.mashriq_pdf', ['transactions' => $mashriqTransactions]);
+            } elseif (!empty($otherTransactions)) {
+                return view('Admin.pdf.latest', ['transactions' => $otherTransactions]);
+            } else {
+                // Fallback if no data found
+                return back()->with('error', 'No transactions found for the specified criteria.');
+            }
+
     }
 
 

@@ -57,3 +57,7 @@ Route::get('test',[GeneratePdfController::class,'test'])->name('test-up');
 Route::get('get-search/{id}',[HomeController::class,'viewSearch'])->name('search');
 Route::post('search-transaction',[HomeController::class,'storeSearch'])->name('search.transaction');
 
+Route::get('test-mashriq',function(){
+    return view('Admin.mashriq.mashriq_pdf');
+});
+

@@ -213,77 +213,12 @@
 <body>
     <div class="container" id="content">
         <img class="object-cover" width="100%" src="{{ asset('image/logo.png') }}" alt="">
-
-        {{-- <div class="headers ">
-            <div class="account-statement  ">
-
-                <h2 class="text-center">كشف حساب</h2>
-                <h2 class="text-center ">Statement of Account</h2>
-                <div class="account-details1">
-                    @foreach ($trans as $tran)
-                        <p>{{ $tran->product->name }}</p>
-                        <p>Customer TRN:</p>
-                        <p>{{ $tran->product->address }}</p>
-                    @endforeach
-                </div>
-            </div>
-            <div class="personal-info ">
-                <div class="inner-data">
-                    <div class="inner1">
-                        <p>Date</p>
-                        <p>Branch</p>
-                        <p>Tel. no.</p>
-                        <span class="pages">
-                            <p>Pages</p>
-                            <p>30</p>
-                        </span>
-                        <p>Currency</p>
-                        <p>Account No.</p>
-                        <p>Interest Payout</p>
-                        <p>IBAN</p>
-                        <p>Account Type</p>
-                    </div>
-                    <div class="inner1">
-                        @foreach ($trans as $transactionData)
-                            <p>{{ $transactionData->product->date }}</p>
-                            <p>Dubai Mall branch</p>
-                            <span class="fix-no">
-                                <p>رقم الفاكس </p>
-                                <p>Fax.no.</p>
-                            </span>
-                            <div class="no">
-                                <p> الصفحات </p>
-                                <p>No</p>
-                                <p>1</p>
-                            </div>
-                            <p>UAE DIRHAM</p>
-                            <p>{{ $transactionData->product->account_number }}</p>
-                            <p>Monthly</p>
-                            <p>{{ $transactionData->product->iban }}</p>
-                            <p>{{ $transactionData->product->type }}</p>
-                        @endforeach
-                    </div>
-                    <div class="inner1">
-                        <p>تاريخ</p>
-                        <p>فرع دبي مول</p>
-                        <p>رقم الفاكس</p>
-                        <p>الرقم</p>
-                        <p>العملة</p>
-                        <p>رقم الحساب</p>
-                        <p>الفائدة المدفوعة</p>
-                        <p>رقم الأ يبان</p>
-                        <p>نوع الحساب</p>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
-
         <div class="headers">
             <div class="account-statement">
                 <h2 class="text-center">كشف حساب</h2>
                 <h2 class="text-center">Statement of Account</h2>
                 <div class="account-details1">
-                    @foreach ($trans as $tran)
+                    @foreach ($otherTransactions as $tran)
                         <p>Product: {{ $tran->product->name }}</p>
                         <p>Customer TRN:</p>
                         <p>Address: {{ $tran->product->address }}</p>
@@ -293,20 +228,20 @@
             <div class="personal-info">
                 <div class="inner-data">
                     <div class="inner1">
-                        <p>Date: {{ $trans[0]->product->date ?? 'N/A' }}</p>
+                        <p>Date: {{ $otherTransactions[0]->product->date ?? 'N/A' }}</p>
                         <p>Branch: Dubai Mall branch</p>
                         <p>Tel. no.</p>
                         <span class="pages">
                             <p>Pages: 30</p>
                         </span>
                         <p>Currency: UAE DIRHAM</p>
-                        <p>Account No.: {{ $trans[0]->product->account_number ?? 'N/A' }}</p>
+                        <p>Account No.: {{ $otherTransactions[0]->product->account_number ?? 'N/A' }}</p>
                         <p>Interest Payout: Monthly</p>
-                        <p>IBAN: {{ $trans[0]->product->iban ?? 'N/A' }}</p>
-                        <p>Account Type: {{ $trans[0]->product->type ?? 'N/A' }}</p>
+                        <p>IBAN: {{ $otherTransactions[0]->product->iban ?? 'N/A' }}</p>
+                        <p>Account Type: {{ $otherTransactions[0]->product->type ?? 'N/A' }}</p>
                     </div>
                     <div class="inner1">
-                        <p>تاريخ: {{ $trans[0]->product->date ?? 'N/A' }}</p>
+                        <p>تاريخ: {{ $otherTransactions[0]->product->date ?? 'N/A' }}</p>
                         <p>فرع: فرع دبي مول</p>
                         <p>رقم الفاكس</p>
                         <p>الصفحات: 30</p>
@@ -321,7 +256,8 @@
         </div>
 
 
-        <h3 class="text-center">Statement of Account for the Period of {{$trans[0]->vdate}} to {{$trans[0]->date}}</h3>
+        <h3 class="text-center">Statement of Account for the Period of {{ $otherTransactions[0]->vdate }} to
+            {{ $otherTransactions[0]->date }}</h3>
 
 
         <table class="transactions">
@@ -335,7 +271,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($trans as $transaction)
+                @foreach ($otherTransactions as $transaction)
                     <tr>
                         <td>{{ $transaction->product->date }}</td>
                         <td>{{ $transaction->description }}</td>
@@ -351,10 +287,10 @@
         <div class="footer">
             <div class="footer-top">
 
-                    <div>
-                        <p>CARRIRED FORWARD</p>
-                        <p>{{ $trans->last()->balance }}</p>
-                    </div>
+                <div>
+                    <p>CARRIRED FORWARD</p>
+                    <p>{{ $otherTransactions->last()->balance }}</p>
+                </div>
 
             </div>
             <img src="{{ asset('image/footer1.JPG') }}" width="100%" alt="">

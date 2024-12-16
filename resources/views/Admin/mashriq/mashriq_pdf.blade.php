@@ -14,9 +14,42 @@
                 "Hiragino Sans GB", "Microsoft Yahei UI", "Microsoft Yahei",
                 "Source Han Sans CN", sans-serif;
         }
+
+        .pdf-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 11.69in; /* Full height of an A4 page */
+            padding: 0.5in; /* Adjust margins */
+            box-sizing: border-box;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid gray;
+            padding-top: 0.2in; /* Adjust padding as needed */
+            color: gray;
+            flex-shrink: 0; /* Prevents the footer from resizing or moving */
+        }
+
+        #content {
+            margin: 0.5in !important;
+            flex: 1;
+            overflow: hidden;
+            bottom: 0;
+            page-break-inside: auto;
+        }
+
+        @media print {
+            #content {
+                margin: 0.5in !important;
+            }
+        }
+        
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
+            margin: 0.5in !important;
             padding: 0;
             font-family: Inter, var(--default-font-family);
             /* font-size: 10.199999809265137px; */
@@ -202,10 +235,10 @@
 
         }
 
-        .footer-bottom {
+        /* .footer-bottom {
             display: flex;
             justify-content: space-between;
-        }
+        } */
 
         .second-div {
             text-align: end;
@@ -214,125 +247,125 @@
 </head>
 
 <body>
-    <div id="content">
-        <div class="container-fluid">
-            <!-- Logo Section -->
-            <div class="logo">
-                <img src="{{ asset('image/mahriq2.png') }}" alt="Bank Logo">
-            </div>
-            <div class=" row main">
-
-                <div class="person-details col-6">
-                    <p><strong>ISLAMIC BANKING</strong></p>
-
-                    {{-- <p>aslam</strong></p> --}}
-                    <p><strong>LAKUWAITSTREATJAJSD</strong></p>
-                    <p><strong>ALMANKHool</strong></p>
-                    <p><strong>Dubai</strong></p>
-                    <p><strong>AE</strong></p>
+    <div class="pdf-container">
+        <div id="content">
+            <div class="container-fluid">
+                <!-- Logo Section -->
+                <div class="logo">
+                    <img src="{{ asset('image/mahriq2.png') }}" alt="Bank Logo">
                 </div>
-                <div class="account-details col-6 ">
-                    <span>
-                        <p><strong>Current account statement</strong></p>
-                        <p><strong>كشف الحساب الجاري</strong></p>
-                    </span>
-                    <span class="acount-num">
-                        <p>Account Number</p>
-                        <p><strong>019120159118</strong></p>
-                        <p><strong>AED</strong></p>
-                        <p>رقم الحساب</p>
-                    </span>
-                    <span>
-                        <p>IBAN</p>
-                        <p><strong>AEB70330000019120159118</strong></p>
-                        <p><strong>ايبان</strong></p>
-                    </span>
-                    <span>
-                        <p>Customer</p>
-                        <p><strong>0150111145</strong></p>
-                        <p>رقم تعريف العميل</p>
-                    </span>
+                <div class=" row main">
+
+                    <div class="person-details col-6">
+                        <p><strong>ISLAMIC BANKING</strong></p>
+
+                        {{-- <p>aslam</strong></p> --}}
+                        <p><strong>LAKUWAITSTREATJAJSD</strong></p>
+                        <p><strong>ALMANKHool</strong></p>
+                        <p><strong>Dubai</strong></p>
+                        <p><strong>AE</strong></p>
+                    </div>
+                    <div class="account-details col-6 ">
+                        <span>
+                            <p><strong>Current account statement</strong></p>
+                            <p><strong>كشف الحساب الجاري</strong></p>
+                        </span>
+                        <span class="acount-num">
+                            <p>Account Number</p>
+                            <p><strong>019120159118</strong></p>
+                            <p><strong>AED</strong></p>
+                            <p>رقم الحساب</p>
+                        </span>
+                        <span>
+                            <p>IBAN</p>
+                            <p><strong>AEB70330000019120159118</strong></p>
+                            <p><strong>ايبان</strong></p>
+                        </span>
+                        <span>
+                            <p>Customer</p>
+                            <p><strong>0150111145</strong></p>
+                            <p>رقم تعريف العميل</p>
+                        </span>
+
+                    </div>
 
                 </div>
-
             </div>
-        </div>
 
-        <!-- Description -->
-        <div class="container-fluid">
-            <span>Dear Customer.</span>
-            <p style="color: gray">Mashreq including its domestic and foreign branches, is
-                committed and keen on ensuring ful compliance with allapplicable
-                laws, regulations and sanction<br />requirements and would lke
-                to remind its customers of the restrictions that the bank has in
-                place on customer activity related to sanctioned countries<br />Kindy
-                visit mashreq.com/sanctions for further detals.
-            <p>
-        </div>
-
-        <!-- Transactions Table -->
-        <div class="container-fluid">
-            <div class="table-container-fluid col-8" style="color: gray">
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Date<br>التاريح</th>
-                            <th>Transaction<br>المعاملات</th>
-                            <th>Reference No<br>الرقم المرجعي</th>
-                            <th>Debit<br>قيور</th>
-                            <th>Credit<br>قيور دائنه</th>
-                            <th>Balance<br>الرصيد</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td></td>
-                            <td>Opening Balance</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>3092092039</td>
-                        </tr>
-                        <tr>
-                            <td>2024-03-30</td>
-                            <td>Value Added Tax - Output - TOC-MAE </td>
-                            <td>033DBLC240903362</td>
-                            <td>0.05</td>
-                            <td>-</td>
-                            <td>13,025.48</td>
-                        </tr>
-                        <tr>
-                            <td>2024-03-30</td>
-                            <td>Online Local Fund Transfer</td>
-                            <td>033DBLC240903362</td>
-                            <td>12,000.00</td>
-                            <td>-</td>
-                            <td>1,025.48</td>
-                        </tr>
-                        <tr>
-                            <td>2024-03-30</td>
-                            <td>Funds Transfer Charges</td>
-                            <td>033DBLC240903362</td>
-                            <td>1.00</td>
-                            <td>-</td>
-                            <td>1,024.48</td>
-                        </tr>
-                        <tr>
-                            <td>2024-03-30</td>
-                            <td>Visa Refund</td>
-                            <td>030PE31240922597</td>
-                            <td>-</td>
-                            <td>577.15</td>
-                            <td>1,601.63</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <!-- Description -->
+            <div class="container-fluid">
+                <span>Dear Customer.</span>
+                <p style="color: gray">Mashreq including its domestic and foreign branches, is
+                    committed and keen on ensuring ful compliance with allapplicable
+                    laws, regulations and sanction<br />requirements and would lke
+                    to remind its customers of the restrictions that the bank has in
+                    place on customer activity related to sanctioned countries<br />Kindy
+                    visit mashreq.com/sanctions for further detals.
+                <p>
             </div>
-        </div>
 
-        <!-- Footer -->
-        <div class="container-fluid">
+            <!-- Transactions Table -->
+            <div class="container-fluid">
+                <div class="table-container-fluid col-8" style="color: gray">
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date<br>التاريح</th>
+                                <th>Transaction<br>المعاملات</th>
+                                <th>Reference No<br>الرقم المرجعي</th>
+                                <th>Debit<br>قيور</th>
+                                <th>Credit<br>قيور دائنه</th>
+                                <th>Balance<br>الرصيد</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td>Opening Balance</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>3092092039</td>
+                            </tr>
+                            <tr>
+                                <td>2024-03-30</td>
+                                <td>Value Added Tax - Output - TOC-MAE </td>
+                                <td>033DBLC240903362</td>
+                                <td>0.05</td>
+                                <td>-</td>
+                                <td>13,025.48</td>
+                            </tr>
+                            <tr>
+                                <td>2024-03-30</td>
+                                <td>Online Local Fund Transfer</td>
+                                <td>033DBLC240903362</td>
+                                <td>12,000.00</td>
+                                <td>-</td>
+                                <td>1,025.48</td>
+                            </tr>
+                            <tr>
+                                <td>2024-03-30</td>
+                                <td>Funds Transfer Charges</td>
+                                <td>033DBLC240903362</td>
+                                <td>1.00</td>
+                                <td>-</td>
+                                <td>1,024.48</td>
+                            </tr>
+                            <tr>
+                                <td>2024-03-30</td>
+                                <td>Visa Refund</td>
+                                <td>030PE31240922597</td>
+                                <td>-</td>
+                                <td>577.15</td>
+                                <td>1,601.63</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Footer -->
             <div class="footer-bottom" style="color: gray">
                 <div>
                     <p>You should verify the items and balance shown on this statement of account.</p>
@@ -352,9 +385,9 @@
                     <p>جميع الرسوم والشروط قابلة للتغيير.</p>
                     <p>يرجى ملاحظة أنه بالنسبة للمبالغ بالعملة الأجنبية فإن الرصيد بالدرهم الإماراتي هو إرشادي فقط.</p>
                 </div>
-
             </div>
         </div>
+        
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 
@@ -365,12 +398,13 @@
 
             const element = document.getElementById('content');
             const options = {
-                margin: 1,
+                margin: [1, 1, 1, 1],
                 filename: 'Statement_of_Account.pdf',
                 html2canvas: {
                     scale: 2
                 },
                 jsPDF: {
+                    format: 'a4',
                     orientation: 'portrait',
                 }
             };

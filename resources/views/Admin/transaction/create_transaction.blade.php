@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard')
+@section('title', 'Create Transaction')
 
 @section('content')
     <!-- Notification Section -->
@@ -109,7 +109,7 @@
                     <div class="row">
                         <div class="col-sm-10 offset-sm-2">
                             <button type="submit" class="btn btn-primary">Submit</button>
-                            <button type="button" class="btn btn-secondary" onclick="window.location.href='your-cancel-url';">Cancel</button>
+                            <button type="button" class="btn btn-secondary" onclick="history.go(-1);">Cancel</button>
                         </div>
                     </div>
                 </form>

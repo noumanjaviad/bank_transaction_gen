@@ -1,15 +1,26 @@
-{{-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" />
+
     <title>Bank Statement</title>
     <style>
+         :root {
+            --default-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                Ubuntu, "Helvetica Neue", Helvetica, Arial, "PingFang SC",
+                "Hiragino Sans GB", "Microsoft Yahei UI", "Microsoft Yahei",
+                "Source Han Sans CN", sans-serif;
+        }
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            font-family: Inter, var(--default-font-family);
+            /* font-size: 10.199999809265137px; */
+            font-weight: 600;
             /* background-color: #f8f8f8; */
         }
 
@@ -19,7 +30,7 @@
             /* background-color: #fff; */
             /* border: 1px solid #ddd; */
             /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
-            max-width: 1200px;
+            /* max-width: auto; */
         }
 
         .logo {
@@ -29,7 +40,8 @@
         }
 
         .logo img {
-            width: 150px;
+            width: 200px;
+            margin-right: 30px;
             /* Adjust logo size */
         }
 
@@ -203,22 +215,23 @@
 
 <body>
     <div id="content">
-        <div class="container">
+        <div class="container-fluid">
             <!-- Logo Section -->
             <div class="logo">
-                <img src="{{ asset('image/al-islami-logo.png') }}" alt="Bank Logo">
+                <img src="{{ asset('image/mahriq2.png') }}" alt="Bank Logo">
             </div>
-            <div class="main">
-                <div class="person-details">
+            <div class=" row main">
+
+                <div class="person-details col-6">
                     <p><strong>ISLAMIC BANKING</strong></p>
 
-                    <p><strong>{{$transactions[0]->product->name}}</strong></p>
+                    {{-- <p>aslam</strong></p> --}}
                     <p><strong>LAKUWAITSTREATJAJSD</strong></p>
                     <p><strong>ALMANKHool</strong></p>
                     <p><strong>Dubai</strong></p>
                     <p><strong>AE</strong></p>
                 </div>
-                <div class="account-details ">
+                <div class="account-details col-6 ">
                     <span>
                         <p><strong>Current account statement</strong></p>
                         <p><strong>كشف الحساب الجاري</strong></p>
@@ -246,15 +259,20 @@
         </div>
 
         <!-- Description -->
-        <div class="container">
-            Mashreq, including its domestic and foreign branches, is committed and keen on ensuring full compliance with
-            all applicable laws, regulations, and sanctions requirements. For further details, visit
-            mashreq.com/sanctions.
+        <div class="container-fluid">
+            <span>Dear Customer.</span>
+            <p style="color: gray">Mashreq including its domestic and foreign branches, is
+                committed and keen on ensuring ful compliance with allapplicable
+                laws, regulations and sanction<br />requirements and would lke
+                to remind its customers of the restrictions that the bank has in
+                place on customer activity related to sanctioned countries<br />Kindy
+                visit mashreq.com/sanctions for further detals.
+            <p>
         </div>
 
         <!-- Transactions Table -->
-        <div class="container">
-            <div class="table-container col-8">
+        <div class="container-fluid">
+            <div class="table-container-fluid col-8" style="color: gray">
 
                 <table>
                     <thead>
@@ -314,8 +332,8 @@
         </div>
 
         <!-- Footer -->
-        <div class="container">
-            <div class="footer-bottom">
+        <div class="container-fluid">
+            <div class="footer-bottom" style="color: gray">
                 <div>
                     <p>You should verify the items and balance shown on this statement of account.</p>
                     <p>Report any discrepancies to the bank in writing within 14 days of the date, otherwise, the
@@ -353,16 +371,41 @@
                     scale: 2
                 },
                 jsPDF: {
-                    orientation: 'portrait'
+                    orientation: 'portrait',
+                    size:'A4'
                 }
             };
 
             html2pdf().set(options).from(element).save().then(() => {
-                // Close the window after saving
                 window.close();
             });
         };
     </script>
+    {{-- <script>
+        console.log('testing');
+        window.onload = function() {
+            console.log("test");
+
+            const element = document.getElementById('content');
+            const options = {
+                margin: 1,
+                filename: 'Statement_of_Account.pdf',
+                html2canvas: {
+                    scale: 2
+                },
+                jsPDF: {
+                    orientation: 'portrait',
+                    unit: 'in', // Use inches
+                    format: 'legal', // Set format to legal
+                    orientation: 'portrait' // Set orientation to portrait
+                }
+            };
+
+            html2pdf().set(options).from(element).save().then(() => {
+                window.close();
+            });
+        };
+    </script> --}}
 </body>
 
-</html> --}}
+</html>

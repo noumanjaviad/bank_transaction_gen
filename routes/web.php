@@ -62,4 +62,7 @@ Route::post('search-transaction',[HomeController::class,'storeSearch'])->name('s
 Route::get('test-mashriq',function(){
     return view('Admin.mashriq.mashriq_pdf');
 });
+Route::get('test-mashriq1',function(){
+    return view('Admin.mashriq.x');
+});
 

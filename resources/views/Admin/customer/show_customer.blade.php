@@ -32,10 +32,10 @@
                              {{-- <a href="{{ route('customers.edit', $customer->id) }}" --}}
                                 <a href="{{route('get_transaction_form',$customer->productid)}}"
                                  class="btn btn-success mb-2 btn-sm">Start Transaction</a>
-                             <a href=""
+                             <a href="{{ route('customers.edit', $customer->productid) }}"
                                  class="btn btn-warning btn-sm">Edit</a>
                              {{-- <form action="{{ route('customers.destroy', $customer->id) }}" method="POST" --}}
-                             <form action="" method="POST"
+                             <form action="{{ route('customers.destroy', $customer->productid) }}" method="POST"
                                 style="display:inline;">
                                  @csrf
                                  @method('DELETE')

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard')
+@section('title', 'Customers Details - Mashriq')
 
 @section('content')
 
@@ -35,7 +35,7 @@
                             <td>{{ $mashriqCustomer->contact }}</td>
                             <td>{{ $mashriqCustomer->address }}</td>
                             <td>
-                                <a href="" class="btn btn-success mb-2 btn-sm">Generate PDF</a>
+                                <a href="{{route('search',$mashriqCustomer->productid)}}" class="btn btn-success mb-2 btn-sm">Generate PDF</a>
                                 {{-- <a href="{{ route('customers.edit', $customer->id) }}" --}}
                                 {{-- <a href="{{route('get_transaction_form')}}"
                                         class="btn btn-success mb-2 btn-sm">Start Transaction</a>

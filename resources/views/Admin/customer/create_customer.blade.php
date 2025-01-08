@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard')
+@section('title', 'Customers')
 
 @section('content')
     <!-- Form Start -->
@@ -54,12 +54,12 @@
                             </select>
                         </div>
                     </div>
-                    <div class="row mb-3">
+                    {{-- <div class="row mb-3">
                         <label for="balance" class="col-sm-2 col-form-label">Amount</label>
                         <div class="col-sm-10">
                             <input type="number" class="form-control" id="balance" name="balance" required min="0">
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="row mb-3">
                         <label for="date" class="col-sm-2 col-form-label">Transaction Date</label>
@@ -85,7 +85,7 @@
                     <div class="row">
                         <div class="col-sm-10 offset-sm-2">
                             <button type="submit" name="submit" class="btn btn-primary">Submit</button>
-                            <button type="button" class="btn btn-secondary" onclick="window.location.href='your-cancel-url';">Cancel</button>
+                            <button type="button" class="btn btn-secondary" onclick="history.go(-1);">Cancel</button>
                         </div>
                     </div>
                 </form>

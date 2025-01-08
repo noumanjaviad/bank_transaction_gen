@@ -33,6 +33,14 @@
 
     <!-- Template Stylesheet -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
+    <style>
+        .nav-link:hover, .nav-link:focus {
+            margin-bottom: 3px;
+            margin-top: 3px;
+            transition: all 200ms;
+        }
+    </style>
 </head>
 
 <body>

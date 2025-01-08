@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard')
+@section('title', "Welcome,". strtoupper(auth()->user()->name))
 
 @section('content')
          <!-- Sale & Revenue Start -->

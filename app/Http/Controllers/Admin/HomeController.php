@@ -10,12 +10,13 @@ use App\Models\TransactionType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
     public function getHomePage()
     {
-        $totalCustomer = Product::count(); // No need to fetch all records, just count them
+        $totalCustomer = Product::count();
         $companyCounts = Product::whereIn('companyid', ['7', '8', '9'])
             ->select('companyid', DB::raw('count(*) as total'))
             ->groupBy('companyid')
@@ -27,6 +28,92 @@ class HomeController extends Controller
         // dd($totalCustomer,$nbd,$mashriq,$dubaiIslamic);
         return view('index', compact('totalCustomer', 'nbd', 'mashriq', 'dubaiIslamic'));
     }
+
+    public function viewSearch($id)
+    {
+        return view('Admin.search', compact('id'));
+    }
+    // public function storeSearch(Request $request)
+    // {
+
+
+    //     $vdate = Carbon::createFromFormat('Y-m-d', $request->from_date)->format('d-m-Y');
+    //     $date = Carbon::createFromFormat('Y-m-d', $request->to_date)->format('d-m-Y');
+    //     // dd($vdate,$date);
+    //     $trans = Transaction::where('vdate', $vdate)
+    //         ->where('date', $date)
+    //         ->where('productid', $request->productid)->with('product')
+    //         ->get();
+
+    //     return view('Admin.pdf.latest', compact('trans'));
+    // }
+
+    public function storeSearch(Request $request)
+    {
+        // $trans=[];
+        $request->validate([
+            'from_date' => 'required|date|before_or_equal:to_date',
+            'to_date' => 'required|date|after_or_equal:from_date',
+            'productid' => 'required|integer|exists:product,productid',
+        ]);
+
+
+        $fromDate = $request->from_date;
+        $toDate = $request->to_date;
+
+        $data = Transaction::where('productid', $request->productid)
+            ->whereBetween('date', [$fromDate, $toDate])
+            ->with('product.company', 'transaction_type')
+            ->get();
+            // dd($data);
+
+        $openingBalanceTransaction = Transaction::where('productid', $request->productid)
+            ->orderBy('date', 'asc')
+            ->first();
+
+        $closingBalanceTransaction = Transaction::where('productid', $request->productid)
+            ->orderBy('date', 'desc')
+            ->first();
+
+        $openingBalance = $openingBalanceTransaction ? $openingBalanceTransaction->balance : 0;
+        $closingBalance = $closingBalanceTransaction ? $closingBalanceTransaction->balance : 0;
+
+        // dd([
+        //     'opening_balance' => $openingBalance,
+        //     'closing_balance' => $closingBalance,
+        // ]);
+
+        // $openingBalance = Transaction::where('productid', $request->productid)
+        //     ->where('date', '<', $fromDate)
+        //     ->sum('balance');
+        // dd($openingBalance);
+
+        $mashriqTransactions = [];
+        $otherTransactions = [];
+        $latest = $data->last();
+        $is_nbd = true;
+
+        foreach ($data as $trans) {
+            if ($trans->product->company->name === 'Mashriq') {
+                $is_nbd = false;
+                $mashriqTransactions[] = $trans;
+            } else {
+                $otherTransactions[] = $trans;
+            }
+        }
+
+        if (!$is_nbd) {
+            return view('Admin.mashriq.mashriq_pdf', ['transactions' => $mashriqTransactions, 'openingBalance' => $openingBalance, 'closingBalance' => $closingBalance,'data' => $data]);
+        }
+
+        if ($is_nbd && !empty($otherTransactions)) {
+            return view('Admin.pdf.latest', ['otherTransactions' => $otherTransactions, 'latest' => $latest , 'openingBalance' => $openingBalance, 'closingBalance' => $closingBalance,'data' => $data]);
+        }
+
+        return back()->with('error', 'No transactions found for the specified criteria.');
+    }
+
+
 
     public function getCreateForm()
     {
@@ -48,7 +135,7 @@ class HomeController extends Controller
         $product = Product::findOrFail($productId);
         $transactionTypes = TransactionType::select('transactiontype_id', 'name')->get();
         // dd($transactionTypes);
-        $transactions = Transaction::with('product')->get();
+        $transactions = Transaction::where('productid', $productId)->with('product')->get();
         // dd($transactions);
         return view('Admin.transaction.create_transaction', compact('transactionTypes', 'transactions', 'product'));
     }
@@ -56,12 +143,11 @@ class HomeController extends Controller
     public function storeTransaction(Request $request, $productId)
     {
         // dd($request->all(),$productId);
-        // Validate the incoming request
         $validated = $request->validate([
             'credit' => 'nullable|numeric|min:0',
             'debit' => 'nullable|numeric|min:0',
             'description' => 'required|string|max:255',
-            'transactiontype_id' => 'required|exists:transaction_types,id', // Assuming a `transaction_types` table
+            'transactiontype_id' => 'required|exists:transaction_types,id',
             'balance' => 'required|numeric|min:0',
             'date' => 'required|date',
             'vdate' => 'nullable|date',
@@ -69,7 +155,6 @@ class HomeController extends Controller
         ]);
 
         try {
-            // Create a transaction record
             $transaction = Transaction::create([
                 'productid' => $productId,
                 'credit' => $validated['credit'] ?? 0,
@@ -86,9 +171,6 @@ class HomeController extends Controller
                 ->route('get_transaction_form', $productId)
                 ->with('success', 'Transaction created successfully!');
         } catch (\Exception $e) {
-            // Log error for debugging
-            Log::error('Transaction creation failed: ' . $e->getMessage());
-
             return redirect()
                 ->back()
                 ->with('error', 'Failed to create transaction. Please try again.');

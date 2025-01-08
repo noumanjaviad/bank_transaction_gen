@@ -176,11 +176,12 @@
         } */
 
         .page-number {
-            position: fixed;
+            /* position: fixed; */
             bottom: 10px;
             right: 10px;
             font-size: 10px;
             color: gray;
+            text-align: center;
         }
 
         /* @page {
@@ -326,9 +327,9 @@
 </head>
 
 <body>
-    <div class="pdf-container">
+    <div class="pdf-container" >
 
-        <div id="content">
+        <div id="content" style=" height:100% !important">
             <div class="logo">
                 <header> <img src="{{ asset('image/logo_update.png') }}" alt="Bank Logo"> </header>
             </div>
@@ -488,34 +489,36 @@
                     <div style="page-break-after: always;"></div>
                 @endif
                 @endforeach
+                <div class="footer-bottom" style="color: gray;position: absolute;bottom:0px">
+                    <div class="bottom">
+                        <div>
+                            <p style="font-family:Calibri;font-size:9px ;font-weight:100">You should verify the items and
+                                balance shown on this statement of account.</p>
+                            <p style="font-family:Calibri;font-size:9px ;font-weight:100">Report any discrepancies to the
+                                bank in writing within 14 days of the date, otherwise, the
+                                content
+                                will be assumed to be accurate.</p>
+                            <p style="font-family:Calibri;font-size:9px ;font-weight:100">All charges and conditions are
+                                subject to change.</p>
+                            <p style="font-family:Calibri;font-size:9px ;font-weight:100">Please note that for foreign
+                                currency amounts, AED balances are indicative only.</p>
+                        </div>
+                        <div class="second-div">
+                            <p>يجب عليك التحقق من العناصر والأرصدة الموضحة في كشف الحساب هذا.</p>
+                            <p>وإبلاغ البنك كتابيًا بأي اختلافات خلال 14 يومًا من التاريخ، وإلا فسيتم افتراض أن المحتوى
+                                دقيق.
+                            </p>
+                            <p>جميع الرسوم والشروط قابلة للتغيير.</p>
+                            <p>يرجى ملاحظة أنه بالنسبة للمبالغ بالعملة الأجنبية فإن الرصيد بالدرهم الإماراتي هو إرشادي فقط.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
             <!-- Footer -->
-            <div class="footer-bottom" style="color: gray">
-                <div class="bottom">
-                    <div>
-                        <p style="font-family:Calibri;font-size:9px ;font-weight:100">You should verify the items and
-                            balance shown on this statement of account.</p>
-                        <p style="font-family:Calibri;font-size:9px ;font-weight:100">Report any discrepancies to the
-                            bank in writing within 14 days of the date, otherwise, the
-                            content
-                            will be assumed to be accurate.</p>
-                        <p style="font-family:Calibri;font-size:9px ;font-weight:100">All charges and conditions are
-                            subject to change.</p>
-                        <p style="font-family:Calibri;font-size:9px ;font-weight:100">Please note that for foreign
-                            currency amounts, AED balances are indicative only.</p>
-                    </div>
-                    <div class="second-div">
-                        <p>يجب عليك التحقق من العناصر والأرصدة الموضحة في كشف الحساب هذا.</p>
-                        <p>وإبلاغ البنك كتابيًا بأي اختلافات خلال 14 يومًا من التاريخ، وإلا فسيتم افتراض أن المحتوى
-                            دقيق.
-                        </p>
-                        <p>جميع الرسوم والشروط قابلة للتغيير.</p>
-                        <p>يرجى ملاحظة أنه بالنسبة للمبالغ بالعملة الأجنبية فإن الرصيد بالدرهم الإماراتي هو إرشادي فقط.
-                        </p>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>

@@ -40,7 +40,7 @@
         #content {
             margin: 0.3in !important;
             flex: 1;
-            overflow: hidden;
+            /* overflow: hidden; */
             bottom: 0;
             page-break-inside: auto;
             font-family: 'Calibri', sans-serif;
@@ -176,9 +176,10 @@
         } */
 
         .page-number {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
+            position: relative;
+            bottom: 40px;
+            top: 100px;
+            text-align: center;
             font-size: 10px;
             color: gray;
         }
@@ -247,6 +248,8 @@
             margin-top: 20px;
             font-size: 12px;
             color: #555;
+            position: fixed;
+            bottom: 10px;
         }
 
         .main {
@@ -310,6 +313,9 @@
         .footer-bottom {
             display: flex;
             justify-content: space-between;
+            position: relative;
+            bottom: 10px;
+            margin-top: 160px;
             /* padding-top: 23%; */
         }
 
@@ -321,6 +327,21 @@
             padding: 2px 0;
             margin: 0;
             font-size: 13px;
+        }
+        @media print {
+            .footer-bottom {
+                position: fixed !important;
+                bottom: 10px !important;
+                width: 100%;
+                top: 100px;
+                text-align: center;
+                display: flex;
+            }
+
+            /* Ensure footer only appears on the last page */
+            .footer-bottom:not(:last-of-type) {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -477,19 +498,19 @@
                             </tbody>
                         </table>
                         <div class="page-number">
-                            Page {{ $pageNumber }}
+                            {{-- Page {{ $pageNumber }} --}} Page <span class="page"></span>
                         </div>
-                </div>
-                @php
+                        @php
                     $pageNumber++; // Increment page number
-                @endphp
-                <!-- Page Break -->
-                @if (!$loop->last)
-                    <div style="page-break-after: always;"></div>
-                @endif
-                @endforeach
+                    @endphp
+                    <!-- Page Break -->
+                    @if (!$loop->last)
+                        <div style="page-break-after: always;"></div>
+                    @endif
+                    @endforeach
+                </div>
+                
             </div>
-
             <!-- Footer -->
             <div class="footer-bottom" style="color: gray">
                 <div class="bottom">
@@ -540,6 +561,13 @@
                 window.close();
             });
         };
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const totalPages = Math.ceil(document.body.scrollHeight / window.innerHeight);
+            document.querySelectorAll('.page-number .page').forEach((page, index) => {
+                page.textContent = index + 1;
+            });
+        });
     </script>
 
 </body>

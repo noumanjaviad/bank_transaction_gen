@@ -40,7 +40,7 @@
         #content {
             margin: 0.3in !important;
             flex: 1;
-            overflow: hidden;
+            /* overflow: hidden; */
             bottom: 0;
             page-break-inside: auto;
             font-family: 'Calibri', sans-serif;
@@ -176,9 +176,10 @@
         } */
 
         .page-number {
-            /* position: fixed; */
-            bottom: 10px;
-            right: 10px;
+            position: relative;
+            bottom: 40px;
+            top: 100px;
+            text-align: center;
             font-size: 10px;
             color: gray;
             text-align: center;
@@ -248,6 +249,8 @@
             margin-top: 20px;
             font-size: 12px;
             color: #555;
+            position: fixed;
+            bottom: 10px;
         }
 
         .main {
@@ -311,6 +314,9 @@
         .footer-bottom {
             display: flex;
             justify-content: space-between;
+            position: relative;
+            bottom: 10px;
+            margin-top: 160px;
             /* padding-top: 23%; */
         }
 
@@ -322,6 +328,21 @@
             padding: 2px 0;
             margin: 0;
             font-size: 13px;
+        }
+        @media print {
+            .footer-bottom {
+                position: fixed !important;
+                bottom: 10px !important;
+                width: 100%;
+                top: 100px;
+                text-align: center;
+                display: flex;
+            }
+
+            /* Ensure footer only appears on the last page */
+            .footer-bottom:not(:last-of-type) {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -478,45 +499,19 @@
                             </tbody>
                         </table>
                         <div class="page-number">
-                            Page {{ $pageNumber }}
+                            {{-- Page {{ $pageNumber }} --}} Page <span class="page"></span>
                         </div>
-                </div>
-                @php
+                        @php
                     $pageNumber++; // Increment page number
-                @endphp
-                <!-- Page Break -->
-                @if (!$loop->last)
-                    <div style="page-break-after: always;"></div>
-                @endif
-                @endforeach
-                <div class="footer-bottom" style="color: gray;position: absolute;bottom:0px">
-                    <div class="bottom">
-                        <div>
-                            <p style="font-family:Calibri;font-size:9px ;font-weight:100">You should verify the items and
-                                balance shown on this statement of account.</p>
-                            <p style="font-family:Calibri;font-size:9px ;font-weight:100">Report any discrepancies to the
-                                bank in writing within 14 days of the date, otherwise, the
-                                content
-                                will be assumed to be accurate.</p>
-                            <p style="font-family:Calibri;font-size:9px ;font-weight:100">All charges and conditions are
-                                subject to change.</p>
-                            <p style="font-family:Calibri;font-size:9px ;font-weight:100">Please note that for foreign
-                                currency amounts, AED balances are indicative only.</p>
-                        </div>
-                        <div class="second-div">
-                            <p>يجب عليك التحقق من العناصر والأرصدة الموضحة في كشف الحساب هذا.</p>
-                            <p>وإبلاغ البنك كتابيًا بأي اختلافات خلال 14 يومًا من التاريخ، وإلا فسيتم افتراض أن المحتوى
-                                دقيق.
-                            </p>
-                            <p>جميع الرسوم والشروط قابلة للتغيير.</p>
-                            <p>يرجى ملاحظة أنه بالنسبة للمبالغ بالعملة الأجنبية فإن الرصيد بالدرهم الإماراتي هو إرشادي فقط.
-                            </p>
-                        </div>
-                    </div>
+                    @endphp
+                    <!-- Page Break -->
+                    @if (!$loop->last)
+                        <div style="page-break-after: always;"></div>
+                    @endif
+                    @endforeach
                 </div>
 
             </div>
-
             <!-- Footer -->
 
         </div>
@@ -543,6 +538,13 @@
                 window.close();
             });
         };
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const totalPages = Math.ceil(document.body.scrollHeight / window.innerHeight);
+            document.querySelectorAll('.page-number .page').forEach((page, index) => {
+                page.textContent = index + 1;
+            });
+        });
     </script>
 
 </body>

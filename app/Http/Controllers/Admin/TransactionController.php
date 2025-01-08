@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\TransactionType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class TransactionController extends Controller
@@ -15,11 +16,11 @@ class TransactionController extends Controller
     {
         try {
             $validatedData = $request->validate([
-                'credit' => 'nullable|numeric|min:0',
-                'debit' => 'nullable|numeric|min:0',
+                'credit' => 'nullable|min:0',
+                'debit' => 'nullable|min:0',
                 'productid' => 'required|exists:product,productid',
                 'description' => 'nullable|string',
-                'transactiontype_id' => 'required|exists:transactiontype,transactiontype_id',
+                'transactiontype_id' => 'required',
                 'date' => 'nullable|date',
                 'vdate' => 'nullable|date',
                 'reference' => 'nullable|string|max:255',
@@ -107,14 +108,45 @@ class TransactionController extends Controller
     }
 
 
+    // public function deleteTransaction($transactionId)
+    // {
+    //     try {
+    //         $transaction = Transaction::findOrFail($transactionId);
+    //         $transaction->delete();
+
+    //         return redirect()->back()->with('success', 'Transaction deleted successfully.');
+    //     } catch (\Exception $e) {
+    //         Log::error('Transaction Delete Error: ' . $e->getMessage());
+
+    //         return redirect()->back()->with('error', 'Something went wrong. Transaction not deleted.');
+    //     }
+    // }
     public function deleteTransaction($transactionId)
     {
+        DB::beginTransaction();
+
         try {
             $transaction = Transaction::findOrFail($transactionId);
+            $lastTransaction = Transaction::where('productid', $transaction->productid)
+                ->where('transactionid', '<', $transactionId)
+                ->latest('transactionid')
+                ->first();
+            $updatedBalance = $lastTransaction ? $lastTransaction->balance : 0;
+            $subsequentTransactions = Transaction::where('productid', $transaction->productid)
+                ->where('transactionid', '>', $transactionId)
+                ->orderBy('transactionid')
+                ->get();
+            foreach ($subsequentTransactions as $subTransaction) {
+                $updatedBalance += $subTransaction->credit - $subTransaction->debit;
+                $subTransaction->update(['balance' => $updatedBalance]);
+            }
             $transaction->delete();
+
+            DB::commit();
 
             return redirect()->back()->with('success', 'Transaction deleted successfully.');
         } catch (\Exception $e) {
+            DB::rollBack();
             Log::error('Transaction Delete Error: ' . $e->getMessage());
 
             return redirect()->back()->with('error', 'Something went wrong. Transaction not deleted.');

@@ -63,32 +63,54 @@ class HomeController extends Controller
 
         $data = Transaction::where('productid', $request->productid)
             ->whereBetween('date', [$fromDate, $toDate])
-            ->with('product.company')
+            ->with('product.company', 'transaction_type')
             ->get();
+            // dd($data);
 
-            $mashriqTransactions = [];
-            $otherTransactions = [];
-            $latest = $data->last();
-            $is_nbd = true;
+        $openingBalanceTransaction = Transaction::where('productid', $request->productid)
+            ->orderBy('date', 'asc')
+            ->first();
 
-            foreach($data as $trans){
-                if($trans->product->company->name === 'Mashriq'){
-                    $is_nbd = false;
-                    $mashriqTransactions[] = $trans;
-                }else{
-                    $otherTransactions[] = $trans;
-                }
+        $closingBalanceTransaction = Transaction::where('productid', $request->productid)
+            ->orderBy('date', 'desc')
+            ->first();
+
+        $openingBalance = $openingBalanceTransaction ? $openingBalanceTransaction->balance : 0;
+        $closingBalance = $closingBalanceTransaction ? $closingBalanceTransaction->balance : 0;
+
+        // dd([
+        //     'opening_balance' => $openingBalance,
+        //     'closing_balance' => $closingBalance,
+        // ]);
+
+        // $openingBalance = Transaction::where('productid', $request->productid)
+        //     ->where('date', '<', $fromDate)
+        //     ->sum('balance');
+        // dd($openingBalance);
+
+        $mashriqTransactions = [];
+        $otherTransactions = [];
+        $latest = $data->last();
+        $is_nbd = true;
+
+        foreach ($data as $trans) {
+            if ($trans->product->company->name === 'Mashriq') {
+                $is_nbd = false;
+                $mashriqTransactions[] = $trans;
+            } else {
+                $otherTransactions[] = $trans;
             }
+        }
 
-            if (!$is_nbd) {
-                return view('Admin.mashriq.mashriq_pdf', ['transactions' => $mashriqTransactions]);
-            }
+        if (!$is_nbd) {
+            return view('Admin.mashriq.mashriq_pdf', ['transactions' => $mashriqTransactions, 'openingBalance' => $openingBalance, 'closingBalance' => $closingBalance,'data' => $data]);
+        }
 
-            if ($is_nbd && !empty($otherTransactions)) {
-                return view('Admin.pdf.latest', ['otherTransactions' => $otherTransactions, 'latest' => $latest]);
-            }
-            
-            return back()->with('error', 'No transactions found for the specified criteria.');
+        if ($is_nbd && !empty($otherTransactions)) {
+            return view('Admin.pdf.latest', ['otherTransactions' => $otherTransactions, 'latest' => $latest , 'openingBalance' => $openingBalance, 'closingBalance' => $closingBalance,'data' => $data]);
+        }
+
+        return back()->with('error', 'No transactions found for the specified criteria.');
     }
 
 

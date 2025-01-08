@@ -45,7 +45,7 @@
                     <div class="row mb-3">
                         <label for="add_amount" class="col-sm-2 col-form-label">Add Amount</label>
                         <div class="col-sm-10">
-                            <input type="number" class="form-control" id="balance" name="credit">
+                            <input type="number" class="form-control" id="balance" name="credit" step="0.01" min="0">
                         </div>
                     </div>
 
@@ -56,7 +56,7 @@
                     <div class="row mb-3">
                         <label for="deduct_amount" class="col-sm-2 col-form-label">Deduct Amount</label>
                         <div class="col-sm-10">
-                            <input type="number" class="form-control" id="account_number" name="debit">
+                            <input type="number" class="form-control" id="account_number" name="debit" step="0.01" min="0">
                         </div>
                     </div>
 
@@ -69,7 +69,7 @@
                     </div>
 
                     <!-- Transaction Type -->
-                    <div class="row mb-3">
+                    {{-- <div class="row mb-3">
                         <label for="transaction_type" class="col-sm-2 col-form-label">Transaction Type</label>
                         <div class="col-sm-10">
                             <select class="form-control" id="transaction_type" name="transactiontype_id" required>
@@ -78,6 +78,13 @@
                                     <option value="{{ $transaction->transactiontype_id }}">{{ $transaction->name }}</option>
                                 @endforeach
                             </select>
+                        </div>
+                    </div> --}}
+
+                    <div class="row mb-3">
+                        <label for="transaction_type" class="col-sm-2 col-form-label">Transaction Type</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" id="description" name="transactiontype_id" rows="3"></textarea>
                         </div>
                     </div>
 

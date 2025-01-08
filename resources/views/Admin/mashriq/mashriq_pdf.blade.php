@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" />
+    {{-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Calibri:wght@300;400;600&display=swap" /> --}}
+    <link href="https://fonts.cdnfonts.com/css/calibri-light" rel="stylesheet">
 
     <title>Bank Statement</title>
     <style>
@@ -27,15 +28,13 @@
             box-sizing: border-box;
         }
 
-        .footer-bottom {
+
+
+        .bottom {
             display: flex;
+            align-items: flex-start;
             justify-content: space-between;
-            border-top: 1px solid gray;
-            padding-top: 0.2in;
-            /* Adjust padding as needed */
-            color: gray;
-            flex-shrink: 0;
-            /* Prevents the footer from resizing or moving */
+            width: 100%;
         }
 
         #content {
@@ -44,19 +43,30 @@
             overflow: hidden;
             bottom: 0;
             page-break-inside: auto;
+            font-family: 'Calibri', sans-serif;
+            /* Corrected font-family syntax */
+            font-size: 10px;
         }
 
         @media print {
             #content {
                 margin: 0.5in !important;
+                font-family: 'Calibri', sans-serif;
+                /* Corrected font-family syntax */
+                font-size: 10px;
             }
+
+            /* Add logo for every page */
+            .logo img {
+                width: 200px;
+            }
+
         }
 
         body {
-            font-family: Arial, sans-serif;
             margin: -52px 0.5in !important;
             padding: 0;
-            font-family: Inter, var(--default-font-family);
+            font-family: "Calibri, sans-serif";
             /* font-size: 10.199999809265137px; */
             font-weight: 600;
             /* background-color: #f8f8f8; */
@@ -71,17 +81,25 @@
             /* max-width: auto; */
         }
 
-        .logo {
+        /* .logo {
             display: flex;
             justify-content: flex-end;
-            /* margin-bottom: 20px; */
+
+        } */
+
+        .logo {
+            text-align: right;
+            margin-bottom: 20px;
         }
 
         .logo img {
+            width: 200px;/ Adjust logo size /
+        }
+
+        /* .logo img {
             width: 200px;
             margin-right: 30px;
-            /* Adjust logo size */
-        }
+        } */
 
         .details {
             display: flex;
@@ -144,12 +162,43 @@
             border-collapse: collapse;
             font-size: 10px;
             text-align: left;
-            font-family: "inter"
+            font-family: "Calibri"
         }
 
         table tr {
             border-bottom: 1px solid #646464;
         }
+
+        /* new */
+
+        /* .page-break {
+            page-break-after: always; / Force a page break after each chunk /
+        } */
+
+        .page-number {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 10px;
+            color: gray;
+        }
+
+        /* @page {
+            @top {
+                content: element(header);
+            }
+
+            @bottom {
+                content: element(footer);
+            }
+        } */
+        @media print {
+            .page {
+                page-break-after: always;
+            }
+        }
+
+        /* new */
 
         table th,
         table td {
@@ -174,6 +223,8 @@
         table tr:last-child td {
             border-bottom: none;
         }
+
+
 
         @media screen and (max-width: 768px) {
             .details {
@@ -215,8 +266,9 @@
             /* flex-direction: column; */
             /* gap: 5px; */
             font-size: 12px;
-            font-family: 'inter';
+            font-family: 'Calibri';
             width: 50%;
+            line-height: 20px;
 
         }
 
@@ -225,8 +277,9 @@
             flex-direction: column;
             width: 50%;
             font-size: 12px;
-            font-family: 'inter';
-            /* gap: 10px; */
+            font-family: 'Calibri';
+            background: rgba(238, 245, 245, 0.31)
+                /* gap: 10px; */
         }
 
         .acount-num p {
@@ -236,7 +289,7 @@
 
         p {
             font-size: 10px;
-            font-family: "inter"
+            font-family: "Calibri"
         }
 
         .opening {
@@ -254,10 +307,11 @@
 
         }
 
-        /* .footer-bottom {
+        .footer-bottom {
             display: flex;
             justify-content: space-between;
-        } */
+            /* padding-top: 23%; */
+        }
 
         .second-div {
             text-align: end;
@@ -273,25 +327,27 @@
 
 <body>
     <div class="pdf-container">
+
         <div id="content">
+            <div class="logo">
+                <header> <img src="{{ asset('image/logo_update.png') }}" alt="Bank Logo"> </header>
+            </div>
             <div class="container-fluid mt-0">
                 <!-- Logo Section -->
 
-                <div class="logo">
-                    <img src="{{ asset('image/mahriq2.png') }}" alt="Bank Logo">
-                </div>
+
                 <div class=" row main">
 
-                    <div class="person-details ">
+                    <div class="person-details">
                         <p><strong>ISLAMIC BANKING</strong></p>
-                        @foreach ($transactions as $mahqTran)
-                            {{-- @dd($mahqTran->product->name) --}}
-
-                            <p><strong>{{ $mahqTran->product->name }}</strong></p>
-                            <p>
-                            <p><strong>{!! nl2br(e(str_replace(',', "\n", $mahqTran->product->address))) !!}</strong></p>
-                            </p>
-                        @endforeach
+                        {{-- @dd($transactions) --}}
+                        {{-- @foreach ($transactions as $mahqTran) --}}
+                        {{-- @dd($mahqTran->product->name) --}}
+                        <p><strong>{{ $transactions[0]->product->name }}</strong></p>
+                        <p>
+                        <p class="address-details"><strong>{!! nl2br(e(str_replace(',', "\n", $transactions[0]->product->address))) !!}</strong></p>
+                        </p>
+                        {{-- @endforeach --}}
                         {{-- <p><strong>AlKuwait Street aghaadir Building 1st floor Al Mas</strong></p>
                         <p><strong>AlMankhool-Dubai-United ArabEmirates</strong></p>
                         <p><strong>Dubai</strong></p>
@@ -304,21 +360,27 @@
                         </span>
                         <span class="acount-num">
                             <p class="no-padding" style="color: gray;font-weight:100">Account Number</p>
-                            <p class="no-padding"><strong>019120159118</strong></p>
+                            <p class="no-padding"><strong>{{ $transactions[0]->product->account_number }}</strong></p>
                             <p class="no-padding"><strong>AED</strong></p>
                             <p>رقم الحساب</p>
                         </span>
                         <span class="account-num">
                             <p class="no-padding" style="color: gray;font-weight:100">IBAN</p>
-                            <p class="no-padding"><strong>AEB70330000019120159118</strong></p>
+                            <p class="no-padding"><strong>{{ $transactions[0]->product->iban }}</strong></p>
                             <p class="no-padding"><strong>ايبان</strong></p>
                         </span>
                         <span class="accout-num">
                             <p class="no-padding" style="color: gray;font-weight:100">Customer</p>
-                            <p class="no-padding"><strong>0150111145</strong></p>
+                            <p class="no-padding"><strong>{{ $transactions[0]->product->contact }}</strong></p>
                             <p class="no-padding">رقم تعريف العميل</p>
                         </span>
+                        <p style="color:gray;font-family:Calibri;font-size:7px ;font-weight:200 ; margin-bottom:0px">
+                            Masreq neo is part of mashreqbank PSC is regulated by the central bank of the united arab
+                            emirates</p>
 
+                        <p style="color:gray;font-family:Calibri;font-size:7px ;text-align:right;font-weight:200">
+                            العراق
+                            مو هو منه في من الصرف PSC وجمع الرقابة البنك المركزي لدولة الإمارة</p>
                     </div>
 
                 </div>
@@ -326,9 +388,9 @@
 
             <!-- Description -->
             <div class="container-fluid">
-                <span style="font-size: 10px;font-family:inter;font-weight:200;color:gray">Dear Customer.</span>
+                <span style="font-size: 10px;font-family:Calibri;font-weight:200;color:gray">Dear Customer.</span>
                 <p
-                    style="color: rgba(128, 128, 128, 0.924);font-size: 10px;font-family:inter;font-weight:100;line-height:18px">
+                    style="color: rgba(128, 128, 128, 0.924);font-size: 10px;font-family:Calibri;font-weight:100;line-height:18px">
                     Mashreq
                     including its domestic and foreign branches, is
                     committed and keen on ensuring ful compliance with allapplicable
@@ -338,104 +400,128 @@
                     visit mashreq.com/sanctions for further detals.
                 <p>
                 <p style="color: gray;display:flex;gap:8px">Statement for period <span
-                        style="color: black">2024-04-01</span> to <span style="color: black">2024-10-16</span></p>
+                        style="color: black">{{ $transactions[0]->vdate }}</span> to <span
+                        style="color: black">{{ $transactions[0]->date }}</span></p>
             </div>
 
             <!-- Transactions Table -->
             <div class="container-fluid">
                 <div class="table-container-fluid col-8" style="color: gray">
+                    @php
+                        // Split transactions into chunks of 10
+                        $chunks = array_chunk($transactions, 10);
+                        // dd($chunks)
+                        $pageNumber = 1;
+                    @endphp
+                    @foreach ($chunks as $index => $chunk)
+                        <table>
 
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Date<br>التاريح</th>
-                                <th>Transaction<br>المعاملات</th>
-                                <th>Reference No<br>الرقم المرجعي</th>
-                                <th>Debit<br>قيور</th>
-                                <th>Credit<br>قيور دائنه</th>
-                                <th>Balance<br>الرصيد</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td></td>
-                                <td>Opening Balance</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>3092092039</td>
-                            </tr>
-                            <tr>
-                                <td valign="top">2024-03-30</td>
-                                <td valign="top">Value Added Tax - Output - TOC-MAE <br>
-                                    01501111-240331024759FUNDTRANSFER-<br>MOBILE
-                                    BANKING<br>/AE180400000193308926001<br>MANOJ PUDASAINI NRAKAEAKXXX
-                                    SRN:<br>MLC31032491418</td>
-                                <td valign="top">033DBLC240903362</td>
-                                <td valign="top">0.05</td>
-                                <td valign="top">-</td>
-                                <td valign="top">13,025.48</td>
-                            </tr>
-                            {{-- <tr>
-                                <td>2024-03-30</td>
-                                <td>Online Local Fund Transfer</td>
-                                <td>033DBLC240903362</td>
-                                <td>12,000.00</td>
-                                <td>-</td>
-                                <td>1,025.48</td>
-                            </tr>
-                            <tr>
-                                <td>2024-03-30</td>
-                                <td>Funds Transfer Charges</td>
-                                <td>033DBLC240903362</td>
-                                <td>1.00</td>
-                                <td>-</td>
-                                <td>1,024.48</td>
-                            </tr>
-                            <tr>
-                                <td>2024-03-30</td>
-                                <td>Visa Refund</td>
-                                <td>030PE31240922597</td>
-                                <td>-</td>
-                                <td>577.15</td>
-                                <td>1,601.63</td>
-                            </tr> --}}
-                        </tbody>
-                    </table>
+                            <thead>
+                                <tr>
+                                    <th>Date<br>التاريح</th>
+                                    <th>Transaction<br>المعاملات</th>
+                                    <th>Reference No<br>الرقم المرجعي</th>
+                                    <th>Debit<br>قيور</th>
+                                    <th>Credit<br>قيور دائنه</th>
+                                    <th>Balance<br>الرصيد</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td>Opening Balance</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>{{ $openingBalance }}</td>
+                                </tr>
+
+                                @foreach ($chunk as $tran)
+                                    <tr>
+                                        <td valign="top" style="white-space: nowrap;">{{ $tran->date }}</td>
+                                        <td valign="top">{{ $tran->transactiontype_id }}</td>
+                                        <td valign="top">{{ $tran->reference }}</td>
+                                        <td valign="top">{{ $tran->debit == 0 ? '-' : $tran->debit }}</td>
+                                        <td valign="top">{{ $tran->credit == 0 ? '-' : $tran->credit }}</td>
+                                        <td valign="top">{{ $tran->balance }}</td>
+                                    </tr>
+                                @endforeach
+
+
+                                @php
+                                    $transactions = collect($transactions);
+                                    $totalDebit = $transactions->sum(function ($transaction) {
+                                        return (float) $transaction['debit'];
+                                    });
+                                    $totalCredit = $transactions->sum(function ($transaction) {
+                                        return (float) $transaction['credit'];
+                                    });
+                                @endphp
+                                <tr>
+                                    <td valign="top" style="white-space: nowrap;"></td>
+                                    <td valign="top"></td>
+                                    <td valign="top"></td>
+                                    <td valign="top">{{ $totalDebit }}</td>
+                                    <td valign="top">{{ $totalCredit }}</td>
+                                    <td valign="top"></td>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <th>Closing Balance</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>{{ $closingBalance }}</th>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <div class="page-number">
+                            Page {{ $pageNumber }}
+                        </div>
                 </div>
+                @php
+                    $pageNumber++; // Increment page number
+                @endphp
+                <!-- Page Break -->
+                @if (!$loop->last)
+                    <div style="page-break-after: always;"></div>
+                @endif
+                @endforeach
             </div>
 
             <!-- Footer -->
             <div class="footer-bottom" style="color: gray">
-                <div>
-                    <p>You should verify the items and balance shown on this statement of account.</p>
-                    <p>Report any discrepancies to the bank in writing within 14 days of the date, otherwise, the
-                        content
-                        will be assumed to be accurate.</p>
-                    <p>All charges and conditions are subject to change.</p>
-                    <p>Please note that for foreign currency amounts, AED balances are indicative only.</p>
-
-                </div>
-
-
-                <div class="second-div">
-                    <p>يجب عليك التحقق من العناصر والأرصدة الموضحة في كشف الحساب هذا.</p>
-                    <p>وإبلاغ البنك كتابيًا بأي اختلافات خلال 14 يومًا من التاريخ، وإلا فسيتم افتراض أن المحتوى دقيق.
-                    </p>
-                    <p>جميع الرسوم والشروط قابلة للتغيير.</p>
-                    <p>يرجى ملاحظة أنه بالنسبة للمبالغ بالعملة الأجنبية فإن الرصيد بالدرهم الإماراتي هو إرشادي فقط.</p>
+                <div class="bottom">
+                    <div>
+                        <p style="font-family:Calibri;font-size:9px ;font-weight:100">You should verify the items and
+                            balance shown on this statement of account.</p>
+                        <p style="font-family:Calibri;font-size:9px ;font-weight:100">Report any discrepancies to the
+                            bank in writing within 14 days of the date, otherwise, the
+                            content
+                            will be assumed to be accurate.</p>
+                        <p style="font-family:Calibri;font-size:9px ;font-weight:100">All charges and conditions are
+                            subject to change.</p>
+                        <p style="font-family:Calibri;font-size:9px ;font-weight:100">Please note that for foreign
+                            currency amounts, AED balances are indicative only.</p>
+                    </div>
+                    <div class="second-div">
+                        <p>يجب عليك التحقق من العناصر والأرصدة الموضحة في كشف الحساب هذا.</p>
+                        <p>وإبلاغ البنك كتابيًا بأي اختلافات خلال 14 يومًا من التاريخ، وإلا فسيتم افتراض أن المحتوى
+                            دقيق.
+                        </p>
+                        <p>جميع الرسوم والشروط قابلة للتغيير.</p>
+                        <p>يرجى ملاحظة أنه بالنسبة للمبالغ بالعملة الأجنبية فإن الرصيد بالدرهم الإماراتي هو إرشادي فقط.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
-
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 
     <script>
-        console.log('testing');
         window.onload = function() {
-            console.log("test");
-
             const element = document.getElementById('content');
             const options = {
                 margin: [1, 1, 1, 1],
@@ -446,9 +532,10 @@
                 jsPDF: {
                     format: 'a4',
                     orientation: 'portrait',
+                    putOnlyUsedFonts: true,
+                    floatPrecision: 16 // or "smart"
                 }
             };
-
             html2pdf().set(options).from(element).save().then(() => {
                 window.close();
             });

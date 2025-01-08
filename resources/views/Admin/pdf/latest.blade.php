@@ -275,8 +275,8 @@
                     <tr>
                         <td>{{ $transaction->product->date }}</td>
                         <td>{{ $transaction->description }}</td>
-                        <td>{{ $transaction->debit }}</td>
-                        <td class="right-align">{{ $transaction->credit }}</td>
+                        <td>{{ $transaction->debit == 0 ? '-' : $transaction->debit }}</td>
+                        <td class="right-align">{{ $transaction->credit == 0 ? '-' : $transaction->credit }}</td>
                         <td class="right-align">{{ $transaction->balance }}</td>
                     </tr>
                 @endforeach

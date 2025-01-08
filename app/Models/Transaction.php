@@ -35,6 +35,6 @@ class Transaction extends Model
 
     public function transaction_type()
     {
-        return $this->belongsTo(TransactionType::class, 'transactiontype_id', 'transactionid');
+        return $this->belongsTo(TransactionType::class, 'transactiontype_id', 'transactiontype_id');
     }
 }

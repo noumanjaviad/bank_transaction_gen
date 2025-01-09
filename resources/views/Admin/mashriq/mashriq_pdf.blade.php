@@ -75,17 +75,7 @@
         .container {
             margin: 20px auto;
             padding: 10px;
-            /* background-color: #fff; */
-            /* border: 1px solid #ddd; */
-            /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
-            /* max-width: auto; */
         }
-
-        /* .logo {
-            display: flex;
-            justify-content: flex-end;
-
-        } */
 
         .logo {
             text-align: right;
@@ -96,18 +86,12 @@
             width: 200px;/ Adjust logo size /
         }
 
-        /* .logo img {
-            width: 200px;
-            margin-right: 30px;
-        } */
-
         .details {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 20px;
             padding: 15px;
-            /* background-color: #f4f4f4; */
             border-radius: 5px;
         }
 
@@ -169,12 +153,6 @@
             border-bottom: 1px solid #646464;
         }
 
-        /* new */
-
-        /* .page-break {
-            page-break-after: always; / Force a page break after each chunk /
-        } */
-
         .page-number {
             position: relative;
             bottom: 40px;
@@ -185,15 +163,6 @@
             text-align: center;
         }
 
-        /* @page {
-            @top {
-                content: element(header);
-            }
-
-            @bottom {
-                content: element(footer);
-            }
-        } */
         @media print {
             .page {
                 page-break-after: always;
@@ -207,13 +176,10 @@
             padding: 10px;
             text-align: left;
             font-size: 10px;
-            /* border-bottom: 1px solid #ddd; */
         }
 
         table th {
-            /* background-color: #f4f4f4; */
             font-weight: 200;
-            /* font-size: large; */
             color: #555;
         }
 
@@ -266,9 +232,6 @@
         }
 
         .person-details {
-            /* display: flex; */
-            /* flex-direction: column; */
-            /* gap: 5px; */
             font-size: 12px;
             font-family: 'Calibri';
             width: 50%;
@@ -283,11 +246,9 @@
             font-size: 12px;
             font-family: 'Calibri';
             background: rgba(238, 245, 245, 0.31)
-                /* gap: 10px; */
         }
 
         .acount-num p {
-            /* gap: 10px; */
             margin: 0px 0 !important;
         }
 
@@ -317,7 +278,6 @@
             position: relative;
             bottom: 10px;
             margin-top: 160px;
-            /* padding-top: 23%; */
         }
 
         .second-div {
@@ -329,15 +289,24 @@
             margin: 0;
             font-size: 13px;
         }
+
         @media print {
             .footer-bottom {
-                position: fixed !important;
-                bottom: 10px !important;
-                width: 100%;
-                top: 100px;
-                text-align: center;
-                display: flex;
+                position: fixed;
+                bottom: 0;
+                /* width: 100%; */
+                top: 0;
+                /* text-align: center;
+                display: flex; */
+                right: 0;
             }
+            .footer {
+            position: relative; / Change to relative /
+            margin-top: auto; / Push footer to the bottom /
+            text-align: center; / Center the footer text /
+            font-size: 10px; / Adjust font size /
+            color: gray; / Footer text color /
+        }
 
             /* Ensure footer only appears on the last page */
             .footer-bottom:not(:last-of-type) {
@@ -348,7 +317,7 @@
 </head>
 
 <body>
-    <div class="pdf-container" >
+    <div class="pdf-container">
 
         <div id="content" style=" height:100% !important">
             <div class="logo">
@@ -436,28 +405,34 @@
                         $pageNumber = 1;
                     @endphp
                     @foreach ($chunks as $index => $chunk)
-                        <table>
-
-                            <thead>
-                                <tr>
-                                    <th>Date<br>التاريح</th>
-                                    <th>Transaction<br>المعاملات</th>
-                                    <th>Reference No<br>الرقم المرجعي</th>
-                                    <th>Debit<br>قيور</th>
-                                    <th>Credit<br>قيور دائنه</th>
-                                    <th>Balance<br>الرصيد</th>
-                                </tr>
-                            </thead>
+                        <?php
+                        $total = count($chunks);
+                        // dd($total);
+                        ?>
+                        <table style="margin-top: 7%">
+                            @if ($index == 0)
+                                <thead>
+                                    <tr>
+                                        <th>Date<br>التاريح</th>
+                                        <th>Transaction<br>المعاملات</th>
+                                        <th>Reference No<br>الرقم المرجعي</th>
+                                        <th>Debit<br>قيور</th>
+                                        <th>Credit<br>قيور دائنه</th>
+                                        <th>Balance<br>الرصيد</th>
+                                    </tr>
+                                </thead>
+                            @endif
                             <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td>Opening Balance</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>{{ $openingBalance }}</td>
-                                </tr>
-
+                                @if ($index == 0)
+                                    <tr>
+                                        <td></td>
+                                        <td>Opening Balance</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>{{ $openingBalance }}</td>
+                                    </tr>
+                                @endif
                                 @foreach ($chunk as $tran)
                                     <tr>
                                         <td valign="top" style="white-space: nowrap;">{{ $tran->date }}</td>
@@ -479,74 +454,97 @@
                                         return (float) $transaction['credit'];
                                     });
                                 @endphp
-                                <tr>
-                                    <td valign="top" style="white-space: nowrap;"></td>
-                                    <td valign="top"></td>
-                                    <td valign="top"></td>
-                                    <td valign="top">{{ $totalDebit }}</td>
-                                    <td valign="top">{{ $totalCredit }}</td>
-                                    <td valign="top"></td>
-                                </tr>
-                                <tr>
-                                    <th></th>
-                                    <th>Closing Balance</th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th>{{ $closingBalance }}</th>
-                                </tr>
+                                @if ($index == $total - 1)
+                                    <tr>
+                                        <td valign="top" style="white-space: nowrap;"></td>
+                                        <td valign="top"></td>
+                                        <td valign="top"></td>
+                                        <td valign="top">{{ $totalDebit }}</td>
+                                        <td valign="top">{{ $totalCredit }}</td>
+                                        <td valign="top"></td>
+                                    </tr>
+                                @endif
+                                @if ($index == $total - 1)
+                                    <tr>
 
+                                        <th></th>
+                                        <th>Closing Balance</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th>{{ $closingBalance }}</th>
+                                    </tr>
+                                @endif
                             </tbody>
                         </table>
-                        <div class="page-number">
-                            {{-- Page {{ $pageNumber }} --}} Page <span class="page"></span>
-                        </div>
-                        @php
-                    $pageNumber++; // Increment page number
-                    @endphp
-                    <!-- Page Break -->
-                    @if (!$loop->last)
-                        <div style="page-break-after: always;"></div>
-                    @endif
+                        @if (!$loop->last)
+                            <div class="page-number">page {{ $index + 1 }} of {{ $total }} </div>
+                            <div style="page-break-after: always;"></div>
+                            <div class="logo" style="padding-top: 30px">
+                                <header> <img src="{{ asset('image/logo_update.png') }}" alt="Bank Logo"> </header>
+                            </div>
+                        @endif
                     @endforeach
                 </div>
-
             </div>
             <!-- Footer -->
-
+            <div class="footer-bottom" style="color: gray">
+                <div class="bottom">
+                    <div>
+                        <p style="font-family:Calibri;font-size:9px ;font-weight:100">You should verify the items and
+                            balance shown on this statement of account.</p>
+                        <p style="font-family:Calibri;font-size:9px ;font-weight:100">Report any discrepancies to the
+                            bank in writing within 14 days of the date, otherwise, the
+                            content
+                            will be assumed to be accurate.</p>
+                        <p style="font-family:Calibri;font-size:9px ;font-weight:100">All charges and conditions are
+                            subject to change.</p>
+                        <p style="font-family:Calibri;font-size:9px ;font-weight:100">Please note that for foreign
+                            currency amounts, AED balances are indicative only.</p>
+                    </div>
+                    <div class="second-div">
+                        <p>يجب عليك التحقق من العناصر والأرصدة الموضحة في كشف الحساب هذا.</p>
+                        <p>وإبلاغ البنك كتابيًا بأي اختلافات خلال 14 يومًا من التاريخ، وإلا فسيتم افتراض أن المحتوى
+                            دقيق.
+                        </p>
+                        <p>جميع الرسوم والشروط قابلة للتغيير.</p>
+                        <p>يرجى ملاحظة أنه بالنسبة للمبالغ بالعملة الأجنبية فإن الرصيد بالدرهم الإماراتي هو إرشادي فقط.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; color: gray;">page {{ $index + 1 }} of {{ $total }}</div>
         </div>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 
-    <script>
-        window.onload = function() {
-            const element = document.getElementById('content');
-            const options = {
-                margin: [1, 1, 1, 1],
-                filename: 'Statement_of_Account.pdf',
-                html2canvas: {
-                    scale: 2
-                },
-                jsPDF: {
-                    format: 'a4',
-                    orientation: 'portrait',
-                    putOnlyUsedFonts: true,
-                    floatPrecision: 16 // or "smart"
-                }
+        <script>
+            window.onload = function() {
+                const element = document.getElementById('content');
+                const options = {
+                    margin: [1, 1, 1, 1],
+                    filename: 'Statement_of_Account.pdf',
+                    html2canvas: {
+                        scale: 2
+                    },
+                    jsPDF: {
+                        format: 'a4',
+                        orientation: 'portrait',
+                        putOnlyUsedFonts: true,
+                        floatPrecision: 16,
+                    }
+                };
+                html2pdf().set(options).from(element).save().then(() => {
+                    window.close();
+                });
             };
-            html2pdf().set(options).from(element).save().then(() => {
-                window.close();
-            });
-        };
 
-        document.addEventListener("DOMContentLoaded", function () {
-            const totalPages = Math.ceil(document.body.scrollHeight / window.innerHeight);
-            document.querySelectorAll('.page-number .page').forEach((page, index) => {
-                page.textContent = index + 1;
-            });
-        });
-    </script>
-
+            // document.addEventListener("DOMContentLoaded", function() {
+            //     const totalPages = Math.ceil(document.body.scrollHeight / window.innerHeight);
+            //     document.querySelectorAll('.page-number .page').forEach((page, index) => {
+            //         page.textContent = index + 1;
+            //     });
+            // });
+        </script>
 </body>
 
 </html>

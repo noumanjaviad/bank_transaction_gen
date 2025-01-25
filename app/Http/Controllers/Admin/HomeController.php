@@ -61,6 +61,8 @@ class HomeController extends Controller
         $fromDate = $request->from_date;
         $toDate = $request->to_date;
 
+        // dd($fromDate,$toDate);
+
         $data = Transaction::where('productid', $request->productid)
             ->whereBetween('date', [$fromDate, $toDate])
             ->with('product.company', 'transaction_type')

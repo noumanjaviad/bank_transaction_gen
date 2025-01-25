@@ -391,7 +391,7 @@
                     visit mashreq.com/sanctions for further detals.
                 <p>
                 <p style="color: gray;display:flex;gap:8px">Statement for period <span
-                        style="color: black">{{ $transactions[0]->vdate }}</span> to <span
+                        style="color: black">{{ $transactions[0]->date }}</span> to <span
                         style="color: black">{{ $transactions[0]->date }}</span></p>
             </div>
 

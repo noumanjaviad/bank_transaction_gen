@@ -16,14 +16,6 @@
                         <div class="col-sm-10">
                             <input type="date" class="form-control" name="from_date">
                         </div>
-                        {{-- <div class="col-sm-10">
-                            <select class="form-control" id="companyid" name="companyid">
-                                <option value="" disabled selected>Select a bank</option>
-                                @foreach ($companies as $company)
-                                    <option value="{{ $company->companyid }}">{{ $company->name }}</option>
-                                @endforeach
-                            </select>
-                        </div> --}}
                     </div>
 
                     <div class="row mb-3">

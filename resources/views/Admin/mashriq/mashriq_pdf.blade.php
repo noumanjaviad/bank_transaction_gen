@@ -17,16 +17,23 @@
                 "Source Han Sans CN", sans-serif;
         }
 
-        .pdf-container {
+        /* .pdf-container {
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            height: 11.69in;
-            /* Full height of an A4 page */
+            / justify-content: space-between;/ height: 11.69in;
+
             padding: 0 0.5in;
-            /* Adjust margins */
+            position: relative;
             box-sizing: border-box;
-        }
+            min-height: 100vh;
+        } */
+
+        .pdf-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    position: relative;
+}
 
 
 
@@ -40,11 +47,10 @@
         #content {
             margin: 0.3in !important;
             flex: 1;
-            /* overflow: hidden; */
             bottom: 0;
             page-break-inside: auto;
             font-family: 'Calibri', sans-serif;
-            /* Corrected font-family syntax */
+            padding-bottom: 600px;
             font-size: 10px;
         }
 
@@ -52,11 +58,11 @@
             #content {
                 margin: 0.5in !important;
                 font-family: 'Calibri', sans-serif;
-                /* Corrected font-family syntax */
+
                 font-size: 10px;
             }
 
-            /* Add logo for every page */
+
             .logo img {
                 width: 200px;
             }
@@ -67,9 +73,9 @@
             margin: -52px 0.5in !important;
             padding: 0;
             font-family: "Calibri, sans-serif";
-            /* font-size: 10.199999809265137px; */
+
             font-weight: 600;
-            /* background-color: #f8f8f8; */
+
         }
 
         .container {
@@ -83,7 +89,7 @@
         }
 
         .logo img {
-            width: 200px;/ Adjust logo size /
+            width: 200px;
         }
 
         .details {
@@ -167,9 +173,19 @@
             .page {
                 page-break-after: always;
             }
+
+            /* .footer-bottom {
+                position: absolute;
+                bottom: 0;
+                page-break-inside: avoid;
+            } */
+
+            / Ensure content doesn't overlap with footer /
+ .table-container-fluid {
+                margin-bottom: 200px;
+            }
         }
 
-        /* new */
 
         table th,
         table td {
@@ -215,8 +231,7 @@
             margin-top: 20px;
             font-size: 12px;
             color: #555;
-            position: fixed;
-            bottom: 10px;
+            / position: fixed;/ bottom: 10px;
         }
 
         .main {
@@ -272,13 +287,77 @@
 
         }
 
-        .footer-bottom {
-            display: flex;
-            justify-content: space-between;
-            position: relative;
-            bottom: 10px;
-            margin-top: 160px;
-        }
+        /* .footer-bottom {
+
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            margin: 0 auto;
+            background-color: white;
+            z-index: 1000;
+
+
+
+
+
+
+
+        } */
+
+        .pdf-content {
+    flex: 1;
+}
+
+/* Footer is positioned at the bottom */
+.footer-bottom {
+    width: 100%;
+    background-color: white;
+    text-align: center;
+    padding: 10px;
+    font-size: 12px;
+    color: gray;
+    margin-top: auto;
+}
+
+/* PRINT STYLES */
+@media print {
+    @page {
+        size: A4;
+        margin: 1in;
+    }
+
+    .pdf-container {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        page-break-after: always; /* Ensures proper page breaks */
+    }
+
+    .pdf-content {
+        flex: 1;
+    }
+
+    /* Ensures the footer appears at the bottom of each printed page */
+    .footer-bottom {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: white;
+        padding: 10px;
+        font-size: 12px;
+        text-align: center;
+        color: gray;
+        page-break-before: avoid; /* Avoids breaking footer across pages */
+    }
+}
+
+        /* position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%; */
 
         .second-div {
             text-align: end;
@@ -289,37 +368,13 @@
             margin: 0;
             font-size: 13px;
         }
-
-        @media print {
-            .footer-bottom {
-                position: fixed;
-                bottom: 0;
-                /* width: 100%; */
-                top: 0;
-                /* text-align: center;
-                display: flex; */
-                right: 0;
-            }
-            .footer {
-            position: relative; / Change to relative /
-            margin-top: auto; / Push footer to the bottom /
-            text-align: center; / Center the footer text /
-            font-size: 10px; / Adjust font size /
-            color: gray; / Footer text color /
-        }
-
-            /* Ensure footer only appears on the last page */
-            .footer-bottom:not(:last-of-type) {
-                display: none;
-            }
-        }
     </style>
 </head>
 
 <body>
-    <div class="pdf-container">
+    <div class="pdf-container" id="pdf-cont" style="height: fit-content">
 
-        <div id="content" style=" height:100% !important">
+        <div class="pdf-content" id="content" style=" height:100% !important">
             <div class="logo">
                 <header> <img src="{{ asset('image/logo_update.png') }}" alt="Bank Logo"> </header>
             </div>
@@ -487,8 +542,10 @@
                     @endforeach
                 </div>
             </div>
+            <div style="text-align: center; color: gray;">page {{ $index + 1 }} of {{ $total }}</div>
+        </div>
             <!-- Footer -->
-            <div class="footer-bottom" style="color: gray">
+            <div class="footer-bottom" style="color: gray;width: 92%">
                 <div class="bottom">
                     <div>
                         <p style="font-family:Calibri;font-size:9px ;font-weight:100">You should verify the items and
@@ -513,38 +570,31 @@
                     </div>
                 </div>
             </div>
-            <div style="text-align: center; color: gray;">page {{ $index + 1 }} of {{ $total }}</div>
-        </div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 
-        <script>
-            window.onload = function() {
-                const element = document.getElementById('content');
-                const options = {
-                    margin: [1, 1, 1, 1],
-                    filename: 'Statement_of_Account.pdf',
-                    html2canvas: {
-                        scale: 2
-                    },
-                    jsPDF: {
-                        format: 'a4',
-                        orientation: 'portrait',
-                        putOnlyUsedFonts: true,
-                        floatPrecision: 16,
-                    }
-                };
-                html2pdf().set(options).from(element).save().then(() => {
-                    window.close();
-                });
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+
+    <script>
+        window.onload = function() {
+            const element = document.getElementById('pdf-cont');
+            const options = {
+                margin: [1, 1, 1, 1],
+                filename: 'Statement_of_Account.pdf',
+                html2canvas: {
+                    scale: 2
+                },
+                jsPDF: {
+                    format: 'a4',
+                    orientation: 'portrait',
+                    putOnlyUsedFonts: true,
+                    floatPrecision: 16,
+                }
             };
-
-            // document.addEventListener("DOMContentLoaded", function() {
-            //     const totalPages = Math.ceil(document.body.scrollHeight / window.innerHeight);
-            //     document.querySelectorAll('.page-number .page').forEach((page, index) => {
-            //         page.textContent = index + 1;
-            //     });
-            // });
-        </script>
+            html2pdf().set(options).from(element).save().then(() => {
+                window.close();
+            });
+        };
+    </script>
 </body>
 
 </html>

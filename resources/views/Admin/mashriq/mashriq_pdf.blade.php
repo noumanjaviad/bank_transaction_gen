@@ -6,16 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     {{-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Calibri:wght@300;400;600&display=swap" /> --}}
-    <link href="https://fonts.cdnfonts.com/css/calibri-light" rel="stylesheet">
+    {{-- <link href="https://fonts.cdnfonts.com/css/calibri-light" rel="stylesheet"> --}}
+
 
     <title>Bank Statement</title>
     <style>
-        :root {
+        /* @import url(http://fonts.googleapis.com/css?family=Times New :400,300,600,700); */
+        @import url('https://fonts.cdnfonts.com/css/roman-new-times');
+        /* :root {
             --default-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
                 Ubuntu, "Helvetica Neue", Helvetica, Arial, "PingFang SC",
                 "Hiragino Sans GB", "Microsoft Yahei UI", "Microsoft Yahei",
                 "Source Han Sans CN", sans-serif;
-        }
+        } */
 
         /* .pdf-container {
             display: flex;
@@ -27,13 +30,20 @@
             box-sizing: border-box;
             min-height: 100vh;
         } */
+        .font-pattern {
+            font-family: "Times New Roman",serif;
+            font-size: 13px;
+            font-weight: 300;
+            line-height: 16px;
+            /* color: rgb(209, 215, 219); */
+        }
 
         .pdf-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    position: relative;
-}
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            position: relative;
+        }
 
 
 
@@ -260,7 +270,9 @@
             width: 50%;
             font-size: 12px;
             font-family: 'Calibri';
-            background: rgba(238, 245, 245, 0.31)
+            background: rgb(218, 199, 193);
+            padding-left: 5px;
+            padding-right: 5px;
         }
 
         .acount-num p {
@@ -307,52 +319,54 @@
         } */
 
         .pdf-content {
-    flex: 1;
-}
+            flex: 1;
+        }
 
-/* Footer is positioned at the bottom */
-.footer-bottom {
-    width: 100%;
-    background-color: white;
-    text-align: center;
-    padding: 10px;
-    font-size: 12px;
-    color: gray;
-    margin-top: auto;
-}
+        /* Footer is positioned at the bottom */
+        .footer-bottom {
+            width: 100%;
+            background-color: white;
+            /* text-align: center; */
+            padding: 10px;
+            font-size: 12px;
+            color: gray;
+            margin-top: auto;
+        }
 
-/* PRINT STYLES */
-@media print {
-    @page {
-        size: A4;
-        margin: 1in;
-    }
+        /* PRINT STYLES */
+        @media print {
+            @page {
+                size: A4;
+                margin: 1in;
+            }
 
-    .pdf-container {
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        page-break-after: always; /* Ensures proper page breaks */
-    }
+            .pdf-container {
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                page-break-after: always;
+                /* Ensures proper page breaks */
+            }
 
-    .pdf-content {
-        flex: 1;
-    }
+            .pdf-content {
+                flex: 1;
+            }
 
-    /* Ensures the footer appears at the bottom of each printed page */
-    .footer-bottom {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background-color: white;
-        padding: 10px;
-        font-size: 12px;
-        text-align: center;
-        color: gray;
-        page-break-before: avoid; /* Avoids breaking footer across pages */
-    }
-}
+            /* Ensures the footer appears at the bottom of each printed page */
+            .footer-bottom {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                padding: 10px;
+                font-size: 12px;
+                text-align: center;
+                color: gray;
+                page-break-before: avoid;
+                /* Avoids breaking footer across pages */
+            }
+        }
 
         /* position: fixed;
             left: 0;
@@ -371,7 +385,7 @@
     </style>
 </head>
 
-<body>
+<body class="font-pattern">
     <div class="pdf-container" id="pdf-cont" style="height: fit-content">
 
         <div class="pdf-content" id="content" style=" height:100% !important">
@@ -434,17 +448,16 @@
 
             <!-- Description -->
             <div class="container-fluid">
-                <span style="font-size: 10px;font-family:Calibri;font-weight:200;color:gray">Dear Customer.</span>
-                <p
-                    style="color: rgba(128, 128, 128, 0.924);font-size: 10px;font-family:Calibri;font-weight:100;line-height:18px">
+                <span style="font-size: 11px;font-family:serif;font-weight:200;">Dear Customer.</span><br>
+                <span style="font-size: 11px;font-family:serif">
                     Mashreq
                     including its domestic and foreign branches, is
                     committed and keen on ensuring ful compliance with allapplicable
-                    laws, regulations and sanction<br />requirements and would lke
+                    laws, regulations and sanctions requirements and would lke
                     to remind its customers of the restrictions that the bank has in
                     place on customer activity related to sanctioned countries<br />Kindy
                     visit mashreq.com/sanctions for further detals.
-                <p>
+                </span>
                 <p style="color: gray;display:flex;gap:8px">Statement for period <span
                         style="color: black">{{ $transactions[0]->date }}</span> to <span
                         style="color: black">{{ $transactions[0]->date }}</span></p>
@@ -491,8 +504,8 @@
                                 @foreach ($chunk as $tran)
                                     <tr>
                                         <td valign="top" style="white-space: nowrap;">{{ $tran->date }}</td>
-                                        <td valign="top">{{ $tran->transactiontype_id }}</td>
-                                        <td valign="top">{{ $tran->reference }}</td>
+                                        <td style="width: 170px;" valign="top">lkjlkjl aksjdklJSDLKjsdl kaJSKDJlkskjdas l SHDKJsh kjs dsHKJ sdk jsd</td>
+                                        <td  valign="top">{{ $tran->reference }}</td>
                                         <td valign="top">{{ $tran->debit == 0 ? '-' : $tran->debit }}</td>
                                         <td valign="top">{{ $tran->credit == 0 ? '-' : $tran->credit }}</td>
                                         <td valign="top">{{ $tran->balance }}</td>
@@ -544,32 +557,32 @@
             </div>
             <div style="text-align: center; color: gray;">page {{ $index + 1 }} of {{ $total }}</div>
         </div>
-            <!-- Footer -->
-            <div class="footer-bottom" style="color: gray;width: 92%">
-                <div class="bottom">
-                    <div>
-                        <p style="font-family:Calibri;font-size:9px ;font-weight:100">You should verify the items and
-                            balance shown on this statement of account.</p>
-                        <p style="font-family:Calibri;font-size:9px ;font-weight:100">Report any discrepancies to the
-                            bank in writing within 14 days of the date, otherwise, the
-                            content
-                            will be assumed to be accurate.</p>
-                        <p style="font-family:Calibri;font-size:9px ;font-weight:100">All charges and conditions are
-                            subject to change.</p>
-                        <p style="font-family:Calibri;font-size:9px ;font-weight:100">Please note that for foreign
-                            currency amounts, AED balances are indicative only.</p>
-                    </div>
-                    <div class="second-div">
-                        <p>يجب عليك التحقق من العناصر والأرصدة الموضحة في كشف الحساب هذا.</p>
-                        <p>وإبلاغ البنك كتابيًا بأي اختلافات خلال 14 يومًا من التاريخ، وإلا فسيتم افتراض أن المحتوى
-                            دقيق.
-                        </p>
-                        <p>جميع الرسوم والشروط قابلة للتغيير.</p>
-                        <p>يرجى ملاحظة أنه بالنسبة للمبالغ بالعملة الأجنبية فإن الرصيد بالدرهم الإماراتي هو إرشادي فقط.
-                        </p>
-                    </div>
+        <!-- Footer -->
+        <div class="footer-bottom" style="color: gray;width: 92%">
+            <div class="bottom">
+                <div>
+                    <p style="font-family:Calibri;font-size:9px ;font-weight:100">You should verify the items and
+                        balance shown on this statement of account.</p>
+                    <p style="font-family:Calibri;font-size:9px ;font-weight:100">Report any discrepancies to the
+                        bank in writing within 14 days of the date, otherwise, the
+                        content
+                        will be assumed to be accurate.</p>
+                    <p style="font-family:Calibri;font-size:9px ;font-weight:100">All charges and conditions are
+                        subject to change.</p>
+                    <p style="font-family:Calibri;font-size:9px ;font-weight:100">Please note that for foreign
+                        currency amounts, AED balances are indicative only.</p>
+                </div>
+                <div class="second-div">
+                    <p>يجب عليك التحقق من العناصر والأرصدة الموضحة في كشف الحساب هذا.</p>
+                    <p>وإبلاغ البنك كتابيًا بأي اختلافات خلال 14 يومًا من التاريخ، وإلا فسيتم افتراض أن المحتوى
+                        دقيق.
+                    </p>
+                    <p>جميع الرسوم والشروط قابلة للتغيير.</p>
+                    <p>يرجى ملاحظة أنه بالنسبة للمبالغ بالعملة الأجنبية فإن الرصيد بالدرهم الإماراتي هو إرشادي فقط.
+                    </p>
                 </div>
             </div>
+        </div>
 
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
